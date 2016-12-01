@@ -1,4 +1,4 @@
-<?php require_once('Data/furniture.php');
+<?php require_once('Data/furniture.php'); 
 /*SELECT a . * , b . * 
 FROM  `oders` a
 INNER JOIN  `products` b ON a.prodid = b.productid WHERE a.sessionid='$getsession'
