@@ -1,28 +1,25 @@
 <?php
 require_once('Data/furniture.php');
 // *** Validate request to login to this site.
-$theemail=$_POST['input-email'];
-if($theemail!=''){
-mysql_select_db($database_furniture, $furniture);
- $query_customer = sprintf("
-SELECT password , username
-  FROM clients where email='$theemail' limit 1
-");
-$customer = mysql_query($query_customer, $furniture) or die(mysql_error());
-$row_customer = mysql_fetch_assoc($customer);
-$showpass=$row_customer['password'];
-$showuser=$row_customer['username'];
+ if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $theemail=$_POST['input-email'];
 
+    if($theemail!=''){
+        mysql_select_db($database_furniture, $furniture);
+        $query_customer = sprintf("SELECT password , username FROM clients where email='$theemail' limit 1");
+        $customer = mysql_query($query_customer, $furniture) or die(mysql_error());
+        $row_customer = mysql_fetch_assoc($customer);
+        $showpass=$row_customer['password'];
+        $showuser=$row_customer['username'];
 
-if($showpass!=''){
-$HTMLs         = "Your Username: $showuser & Password: $showpass. Please log into the website using this password";
-$to           = "$theemail";
-$subject     = "Your Password Request";
+        if($showpass!=''){
+            $HTMLs       = "Your Username: $showuser & Password: $showpass. Please log into the website using this password";
+            $to          = "$theemail";
+            $subject     = "Your Password Request";
 
-//echo $to;
-
- mail($to,$subject,$HTMLs);
-}
+            mail($to,$subject,$HTMLs);
+        }
+    }
 }
 
 // see how many times this guy is going to try to login
@@ -43,7 +40,7 @@ if (isset($_POST['username'])) {
   $getthetries=htmlentities($_POST['tries']);
   
   
-  if($getthetries==""){
+if($getthetries==""){
  $attempts = "0";
 }
 if($getthetries=="0"){
@@ -129,6 +126,8 @@ mysql_select_db($database_furniture, $furniture);
 <link href="styles/framework.css"       rel="stylesheet" type="text/css">
 <link href="styles/font-awesome.css"    rel="stylesheet" type="text/css">
 <link href="styles/animate.css"         rel="stylesheet" type="text/css">
+<link href="styles/overrides.css"       rel="stylesheet" type="text/css">
+<link href="styles/hamburgers.css"      rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jqueryui.js"></script>
@@ -149,7 +148,13 @@ mysql_select_db($database_furniture, $furniture);
 </div>
     
 <div id="header-fixed" class="header-light">
-    <a class="header-icon-left open-left-sidebar" href="#"><i class="fa fa-navicon"></i></a>
+    <a class="header-icon-left open-left-sidebar" href="#">
+        <button class="hamburger hamburger--arrow" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span> 
+          </span>
+        </button>
+    </a>
     <a class="header-icon-two open-header-menu disabled" href="#"><i class="fa fa-angle-down"></i></a>
     <a class="header-logo" href="#"></a>
     <a class="header-icon-right open-right-sidebar" href="#"><i class="fa fa-envelope-o"></i></a>
@@ -356,32 +361,34 @@ mysql_select_db($database_furniture, $furniture);
             <div class="pageapp-login bg-5 cover-screen">    
                 <div class="pageapp-login-content cover-center">
                   <div class="boxed-layout">
-                        <a class="pageapp-login-logo" href="#"></a>
+                        <div class="text-center">
+                            <h2>Sign In</h2>
+                        </div>
                         <form id="loginform" class="form-vertical no-padding no-margin" action="<?PHP echo $loginFormAction; ?>" name="loginform" method="post">
-                        <div class="pageapp-login-field">
-                            <i class="fa fa-user"></i>
-                            <input type="text" value="UserName" id="username" name="username" onfocus="if (this.value=='UserName') this.value = ''" onblur="if (this.value=='') this.value = 'UserName'">
-                        </div>
-                        <div class="pageapp-login-field">
-                            <i class="fa fa-user"></i>
-                            <input type="password" id="password" name="password" value="Password" onfocus="if (this.value=='Pasword') this.value = ''" onblur="if (this.value=='') this.value = 'Pasword'">
-                        </div>
-                          <div class="pageapp-login-links">
-                        <a href="#" class="page-login-forgot"><i class="ion-ios-eye"></i>Forgot Credentials</a>
-                        <a href="register.php" class="page-login-create">Create Account<i class="ion-android-create"></i></a>
-                        <div class="clear"></div>
-                    </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="username">Username</label>
+                                <input class="form-control" id="username" name="username" type="text" placeholder="Enter email or phone" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="password">Password <a href="#" class="page-login-forgot">I forgot it :(</a></label>
+                                <input class="form-control" type="password" id="password" name="password" value="Password" />
+                            </div>
+
+
                         <input name="fname" type="hidden" id="fname">
-<input name="lname" type="hidden" id="lname">
-<input name="uid" type="hidden" id="uid">
-<input name="token" type="hidden" id="token">
-<input name="tries" type="hidden" id="tries" value="<?php $attempts ?>">
- <br>
- <a href="#" onClick="javascript: document.loginform.submit();" class="pageapp-signup-button button button-small button-green button-fullscreen">LOG IN</a>
- 
+                        <input name="lname" type="hidden" id="lname">
+                        <input name="uid" type="hidden" id="uid">
+                        <input name="token" type="hidden" id="token">
+                        <input name="tries" type="hidden" id="tries" value="<?php $attempts ?>">
+                        <br />
+                        <input class="btn-block btn-main btn" type="submit" value="Log In">
+                        <div class="pull-left">
+                            Need to register? <a href="register.php">It's free and easy!</a>
+                        </div>
                     </form>
                        
-                    <div class="decoration"></div>
+                    <div class=""></div>
                      <?php  // put facebook login button here ?>
                                        
                     </div>

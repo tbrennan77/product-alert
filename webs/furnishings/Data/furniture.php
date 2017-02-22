@@ -4,6 +4,11 @@
 # HTTP="true"
 ob_start();
 session_start();
+
+	@ini_set('display_errors', 1);
+	@ini_set('track_errors', 0);
+	error_reporting(-1);
+
 $PHPSESSID=session_id();
 $gsession=$PHPSESSID;
 $today= date("Y/m/d");
@@ -18,10 +23,10 @@ $DB_Hostname = "atlanta-web-development.com";
 $IsItGood = explode($DB_Hostname,$Host);
 //$IsItGood1 = explode($DB_Hostname1,$Host1);
 
-if(($IsItGood[1] <> '/'))  { 
-	echo "<font color='red'>11An error has occured!!!</font><br><br>It appears you are trying to access the database credentials for a site that does not belong to the current site you are on.<br><br>This is a security breach and has been blocked.";
-	exit;
-}
+//if(($IsItGood[1] <> '/'))  { 
+//	echo "<font color='red'>11An error has occured!!!</font><br><br>It appears you are trying to access the database credentials for a site that does not belong to the current site you are on.<br><br>This is a security breach and has been blocked.";
+//	exit;
+//}
 
 
 //-------------------------------------------------------------------------------------------------
@@ -53,6 +58,9 @@ while (count($Array_Vulgar) > $Current_Vulgar) {
 // Lets search for SPAM words and create errors
 $Array_Spam = explode(",",$Words_Spam);
 $Current_Spam= 0;
+$Spam_Found = "";
+$Vulgar_Found = "";
+
 while (count($Array_Spam) > $Current_Spam) {
 	$Check_1 = explode(" " . $Array_Spam[$Current_Spam],$Words_Submitted);
 	$Check_2 = explode($Array_Spam[$Current_Spam] . " ",$Words_Submitted);
@@ -110,9 +118,10 @@ elseif($DBHack_Found <> "") {
 
 $hostname_furniture = "localhost";
 $database_furniture = "hinklema_furniture";
-$username_furniture = "hinklema_bhinkle";
-$password_furniture = "052597";
-$furniture = mysql_connect($hostname_furniture, $username_furniture, $password_furniture) or trigger_error(mysql_error(),E_USER_ERROR); 
+$username_furniture = "root";
+$password_furniture = "harley77";
+
+$furniture = mysqli_connect($hostname_furniture, $username_furniture, $password_furniture) or trigger_error(mysql_error(),E_USER_ERROR); 
 
 //echo ("<meta http-equiv=\"Page-Enter\" content=\"blendTrans(Duration=1.0)\">");
 //echo ("<meta http-equiv=\"Page-Exit\" content=\"blendTrans(Duration=1.0)\">");
