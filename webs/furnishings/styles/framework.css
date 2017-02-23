@@ -5383,7 +5383,7 @@ ul.tabs li.active-tab{
 }
 
 .pageapp-login .boxed-layout div input{
-    display:block;
+   /*display:block;
     width:100%;
     height:40px;
     line-height:40px;
@@ -5392,7 +5392,7 @@ ul.tabs li.active-tab{
     color:#1f1f1f;
     border-bottom:solid 1px rgba(0,0,0,0.1);
     margin-bottom:20px;
-    font-size:12px;
+    font-size:12px;*/
 }
 
 .pageapp-login .boxed-layout .decoration{

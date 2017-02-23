@@ -1,5 +1,22 @@
 <?php
 require_once('Data/furniture.php');
+require_once ('php-graph-sdk-5.0.0/src/Facebook/autoload.php');
+
+
+$fb = new Facebook\Facebook([
+  'app_id' => '253028625122348',
+  'app_secret' => '7e77f6e64b3e51dea46a9ce66b5b0134',
+  'default_graph_version' => 'v2.5',
+]);
+
+
+$helper = $fb->getRedirectLoginHelper();
+ 
+
+$permissions = []; // Optional information that your app can access, such as 'email'
+$loginUrl = $helper->getLoginUrl('https://example.com/fb-callback.php', $permissions);
+
+
 // *** Validate request to login to this site.
  if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $theemail=$_POST['input-email'];
@@ -53,8 +70,8 @@ if($getthetries=="2"){
  $attempts = "3";
 }
 if($getthetries=="3"){
-  $attempts ="4";
-$error="you have exceeded the max number of times to login.  Please click the forgot password link and we will send you the password.";
+ $attempts ="4";
+ $error="you have exceeded the max number of times to login.  Please click the forgot password link and we will send you the password.";
 }
 
 if($attempts!="4"){
@@ -63,7 +80,8 @@ if($attempts!="4"){
   $MM_redirectLoginSuccess = "index.php";
   $MM_redirectLoginFailed = $MM_redirectLoginFailed1;
   $MM_redirecttoReferrer = false;
-mysql_select_db($database_furniture, $furniture);
+  
+  mysql_select_db($database_furniture, $furniture);
   
   $LoginRS__query=sprintf("SELECT username, password, email FROM clients WHERE username='%s' AND password='%s'",
     get_magic_quotes_gpc() ? $loginUsername : addslashes($loginUsername), get_magic_quotes_gpc() ? $password : addslashes($password)); 
@@ -75,14 +93,13 @@ mysql_select_db($database_furniture, $furniture);
   $theuseremail=$row_login['email'];
   
  }
-  if ($loginFoundUser) {
+ if ($loginFoundUser) {
      $loginStrGroup = "";
     
     //declare 3 session variables and assign them
     $_SESSION['MM_Username'] = $loginUsername;
     $_SESSION['MM_UserGroup'] = $loginStrGroup;	
 	$_SESSION['MM_Email'] = $theuseremail;
-      
 
     if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
@@ -117,9 +134,9 @@ mysql_select_db($database_furniture, $furniture);
 <link rel="icon" type="image/png" href="images/splash/favicon-96x96.png" sizes="96x96">
 <link rel="icon" type="image/png" href="images/splash/favicon-32x32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="images/splash/favicon-16x16.png" sizes="16x16">
-<link rel="shortcut icon" href="images/splash/favicon.ico" type="image/x-icon" /> 
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /> 
     
-<title>Community Furnishings Alerts</title>
+<title>MyFurnitureWishlist.com</title>
 
 <link href="styles/style.css"           rel="stylesheet" type="text/css">
 <link href="styles/menus.css"           rel="stylesheet" type="text/css">
@@ -157,7 +174,7 @@ mysql_select_db($database_furniture, $furniture);
     </a>
     <a class="header-icon-two open-header-menu disabled" href="#"><i class="fa fa-angle-down"></i></a>
     <a class="header-logo" href="#"></a>
-    <a class="header-icon-right open-right-sidebar" href="#"><i class="fa fa-envelope-o"></i></a>
+    <a class="header-icon-right open-right-sidebar" href="#" style="display: none;"><i class="fa fa-envelope-o"></i></a>
     
     <div class="header-menu-overlay"></div>
     <div class="header-menu header-menu-light">
@@ -366,6 +383,12 @@ mysql_select_db($database_furniture, $furniture);
                         </div>
                         <form id="loginform" class="form-vertical no-padding no-margin" action="<?PHP echo $loginFormAction; ?>" name="loginform" method="post">
 
+                            <div class="social-logins">
+                                <div class="fb-login social-login">
+                                    <a data-analytics_details="facebook" data-analytics_event="Sign Up" data-analytics_location="sign up page" href="<?php echo htmlspecialchars($loginUrl); ?>"><div class="ml-icon ml-facebook-login"></div>
+                                    </a>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="form-label" for="username">Username</label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="Enter email or phone" />
@@ -395,9 +418,40 @@ mysql_select_db($database_furniture, $furniture);
                 </div>
                 <div class="overlay bg-black"></div>
                
-            </div>   
-            
+            </div>  
+            <div id="sell-link" class="">
+                <h3>
+                    <a href="https://communityfurnishings.com/">Want to sell some furniture?</a>
+                </h3>
+                <img alt="Truck icon sm" src="images/truck_icon_sm-51825532a375a3dadfc9d26f741ababb.png">
+            </div> 
+            <div id="footer">
+                <div class="text-center">
+                    <div class="share-icons">
+                        <h2>FOLLOW US ON SOCIAL</h2>
+                        <p>
+                            <span>
+                                <a class="pinterest" href="http://www.pinterest.com/" target="_blank">
+                                    <img alt="Pinterest" src="images/pinterest-c14212a7e4eb48bb464beb5d8546cc12.png">
+                                </a>
+                                <a class="facebook" href="http://facebook.com/" target="_blank">
+                                    <img alt="Facebook" src="images/facebook-7857dd5132dad951307a35b746307f7c.png">
+                                </a>
+                                <a class="twitter" href="https://twitter.com" target="_blank">
+                                    <img alt="Twitter" src="images/twitter-d4a0376da5a90719d29a98a0ab83ad03.png">
+                                </a>
+                                <a class="instagram" href="http://instagram.com" target="_blank">
+                                    <img alt="Instagram" src="images/instagram-a4a3e5e92d2b999c24051428cf69d2c4.png">
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="copyright-notice">
+                        Copyright © 2017 MyFurnitureWishlist.com All Rights Reserved.
+                    </div>
+            </div>
         </div>
+
     </div>  
     <a href="#" class="back-to-top-badge"><i class="fa fa-caret-up"></i>Back to top</a>
 </div>
