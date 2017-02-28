@@ -134,7 +134,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     </a>
     <a class="header-icon-two open-header-menu disabled" href="#"><i class="fa fa-angle-down"></i></a>
     <a class="header-logo" href="#"></a>
-    <a class="header-icon-right open-right-sidebar disabled" href="#"><i class="fa fa-envelope-o"></i></a>
+    <a class="header-icon-right open-right-sidebar" href="#" style="display: none;"><i class="fa fa-envelope-o"></i></a>
     
     <div class="header-menu-overlay"></div>
     <div class="header-menu header-menu-light">
@@ -323,7 +323,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                          <?php if($errormsg!=1){ ?>
                             <div class="form-group">
                                 <label class="form-label" for="email">Email</label>
-                                <input type="text" name="email" id="email" class="form-control requiredField requiredEmailField">
+                                <input type="text" name="email" id="email" class="form-control requiredField requiredEmailField" placeholder="Email address is username">
                             </div>    
                         <?php } else { ?>
                             <div class="static-notification bg-red-dark">
@@ -347,7 +347,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>                    
                         <div class="form-group">
                             <label class="form-label" for="phone">Cell Phone</label>
-                            <input type="text" name="phone" id="phone" class="form-control requiredField requiredEmailField">
+                            <input type="text" name="phone" id="phone" class="form-control requiredField requiredEmailField" placeholder="(555) 333-7890" />
                         </div>
                         
                         <div class="form-group">
