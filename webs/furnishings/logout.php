@@ -9,5 +9,5 @@ unset($_SESSION['userData']);
 $facebook->destroySession();
 
 //Redirect to homepage
-header("Location:index.php");
+header("Location:login.php");
 ?>

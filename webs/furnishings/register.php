@@ -32,31 +32,36 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // start the insert 
     if ($_POST["MM_insert"] == "form2") {
     	
-    	$theemail=$_POST['username'];
+    	$theemail=$_POST['email'];
     	$thephone=$_POST['phone'];
     	$pphone=preg_replace("/[^0-9]/", "", $thephone);
     	
-    	mysql_select_db($database_furniture, $furniture);
-    $query_Recordset1 = "select IFNULL(clientid,0) as clientid from `clients` where username='$theemail' ";
-    $Recordset1 = mysql_query($query_Recordset1, $furniture) or die(mysql_error());
-    $row_Recordset1 = mysql_fetch_assoc($Recordset1);
-    $totalRows_Recordset1 = mysql_num_rows($Recordset1);
-    $theclientid=$row_Recordset1['clientid'];
+    	mysqli_select_db($furniture, $database_furniture);
+
+        $query_Recordset1 = "select IFNULL(clientid,0) as clientid from `clients` where username='$theemail' ";
+        $Recordset1 = mysqli_query($furniture, $query_Recordset1) or die(mysql_error());
+
+        $row_Recordset1       = $Recordset1->fetch_assoc();
+        $totalRows_Recordset1 = $Recordset1->num_rows;
+        
+        $theclientid=$row_Recordset1['clientid'];
 
     	   if($totalRows_Recordset1<=0) { 
     		
-      $insertSQL = sprintf("INSERT INTO clients (username,password,fname, lname, email, phone, changedate, phone_carrier) VALUES (%s, %s,%s, %s, %s, %s, %s, %s)",
-                            GetSQLValueString($_POST['username'], "text"),
+      $insertSQL = sprintf("INSERT INTO clients (username,password,fname, lname, email, phone, modified, created, phone_carrier) VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s)",
+                          GetSQLValueString($_POST['email'], "text"),
     					   GetSQLValueString($_POST['password'], "text"),
-                           GetSQLValueString($_POST['firstname'], "text"),
-    					   GetSQLValueString($_POST['lastname'], "text"),
+                           GetSQLValueString("", "text"),
+    					   GetSQLValueString("", "text"),
     					   GetSQLValueString($_POST['email'], "text"),
     					   GetSQLValueString($pphone, "text"),
-    					   GetSQLValueString($_POST['date'], "date"),
+                           GetSQLValueString(date("Y-m-d H:i:s"), "date"),
+    					   GetSQLValueString(date("Y-m-d H:i:s"), "date"),
     					   GetSQLValueString($_POST['phone_carrier'], "text"));
 
-      mysql_select_db($database_furniture, $furniture);
-      $Result1 = mysql_query($insertSQL, $furniture) or die(mysql_error());
+      mysqli_select_db($furniture, $database_furniture);
+
+      $Result1 = mysqli_query($furniture, $insertSQL) or die(mysql_error());
       
        $insertGoTo ="login.php";
 
@@ -317,19 +322,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                          <form method="post" name="form2" action="">
                          <?php if($errormsg!=1){ ?>
                             <div class="form-group">
-                                <label class="form-label" for="username">Username</label>
-                                <input class="form-control" id="username" name="username" type="text" placeholder="Enter email or phone" />
-                            </div>
-                            
+                                <label class="form-label" for="email">Email</label>
+                                <input type="text" name="email" id="email" class="form-control requiredField requiredEmailField">
+                            </div>    
                         <?php } else { ?>
                             <div class="static-notification bg-red-dark">
-                                <input type="text" value="Username Exists" name="username" id="username" class="form-control requiredField requiredEmailField">
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email is already in use</label>
+                                    <input type="text" name="email" id="email" class="form-control requiredField requiredEmailField">
+                                </div> 
                             </div>  
-                        <?php } ?>
-                        <div class="form-group">
-                            <label class="form-label" for="email">Email</label>
-                            <input type="text" name="email" id="email" class="form-control requiredField requiredEmailField">
-                        </div>   
+                        <?php } ?>   
                         <div class="form-group">
                             <label class="form-label" for="password">Password</label>
                             <input type="password" value="Password" name="password" id="password" class="form-control requiredField requiredEmailField">

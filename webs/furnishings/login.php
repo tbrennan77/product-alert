@@ -1,37 +1,95 @@
 <?php
+// include database connect
 require_once('Data/furniture.php');
-require_once ('php-graph-sdk-5.0.0/src/Facebook/autoload.php');
 
+// include FB config file and User class
+require_once 'fbConfig.php';
+require_once 'User.php';
 
-$fb = new Facebook\Facebook([
-  'app_id' => '253028625122348',
-  'app_secret' => '7e77f6e64b3e51dea46a9ce66b5b0134',
-  'default_graph_version' => 'v2.5',
-]);
+// initialize variable(s)
+$loginURL = "";
+$username = "";
 
+if(!$fbUser){
+    $fbUser = NULL;
+    $loginURL = $facebook->getLoginUrl(array('redirect_uri'=>$redirectURL,'scope'=>$fbPermissions));
+    $output = '<a href="'.$loginURL.'"><img src="images/fblogin-btn.png"></a>';
 
-$helper = $fb->getRedirectLoginHelper();
- 
+} else {
+    //Get user profile data from facebook
+    $fbUserProfile = $facebook->api('/me?fields=id,first_name,last_name,email,link,gender,locale,picture');
 
-$permissions = []; // Optional information that your app can access, such as 'email'
-$loginUrl = $helper->getLoginUrl('https://example.com/fb-callback.php', $permissions);
+    //Initialize User class
+    $user = new User();
+    
+    //Insert or update user data to the database
+    $fbUserData = array(
+        'oauth_provider'=> 'facebook',
+        'oauth_uid'     => $fbUserProfile['id'],
+        'first_name'    => $fbUserProfile['first_name'],
+        'last_name'     => $fbUserProfile['last_name'],
+        'email'         => $fbUserProfile['email'],
+        'gender'        => $fbUserProfile['gender'],
+        'locale'        => $fbUserProfile['locale'],
+        'picture'       => $fbUserProfile['picture']['data']['url'],
+        'link'          => $fbUserProfile['link']
+    );
+    $userData = $user->checkUser($fbUserData);
+    
+    print_r($userData);
 
+    //Put user data into session
+    $_SESSION['userData'] = $userData;
+    
+    //Render facebook profile data
+    if(!empty($userData)){
+        $output = '<h1>Facebook Profile Details </h1>';
+        $output .= '<img src="'.$userData['picture'].'">';
+        $output .= '<br/>Facebook ID : ' . $userData['oauth_uid'];
+        $output .= '<br/>Name : ' . $userData['first_name'].' '.$userData['last_name'];
+        $output .= '<br/>Email : ' . $userData['email'];
+        $output .= '<br/>Gender : ' . $userData['gender'];
+        $output .= '<br/>Locale : ' . $userData['locale'];
+        $output .= '<br/>Logged in with : Facebook';
+        $output .= '<br/><a href="'.$userData['link'].'" target="_blank">Click to Visit Facebook Page</a>';
+        $output .= '<br/>Logout from <a href="logout.php">Facebook</a>'; 
+    }else{
+        $output = '<h3 style="color:red">Some problem occurred, please try again.</h3>';
+    }
+
+    // echo $output;
+}
 
 // *** Validate request to login to this site.
  if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $theemail=$_POST['input-email'];
 
-    if($theemail!=''){
-        mysql_select_db($database_furniture, $furniture);
-        $query_customer = sprintf("SELECT password , username FROM clients where email='$theemail' limit 1");
-        $customer = mysql_query($query_customer, $furniture) or die(mysql_error());
-        $row_customer = mysql_fetch_assoc($customer);
+    // check if username is initialized
+    if(!isset($_POST['username']) || $_POST['username'] == false) {
+        $username = '';
+    } else {
+        $username = $_POST['username'];
+        if($username == "") {
+
+            $username = $_REQUEST['username'];
+        }
+    }
+
+
+    // Check if we have a valid username
+    if($username != ''){
+        mysqli_select_db($furniture, $database_furniture);
+
+        $query_customer = sprintf("SELECT password , username FROM clients where username = '$username' limit 1");
+        $customer = mysqli_query($furniture, $query_customer) or die(mysql_error());
+        $row_customer = $customer->fetch_assoc();
+
         $showpass=$row_customer['password'];
         $showuser=$row_customer['username'];
 
+        // Password email reminder
         if($showpass!=''){
             $HTMLs       = "Your Username: $showuser & Password: $showpass. Please log into the website using this password";
-            $to          = "$theemail";
+            $to          = "$username";
             $subject     = "Your Password Request";
 
             mail($to,$subject,$HTMLs);
@@ -51,11 +109,13 @@ if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = htmlentities($_GET['accesscheck']);
 }
 
-if (isset($_POST['username'])) {
+
+if ($username) {
+
   $loginUsername=htmlentities($_POST['username']);
   $password=htmlentities($_POST['password']);
   $getthetries=htmlentities($_POST['tries']);
-  
+
   
 if($getthetries==""){
  $attempts = "0";
@@ -78,22 +138,27 @@ if($attempts!="4"){
 
   $MM_fldUserAuthorization = "";
   $MM_redirectLoginSuccess = "index.php";
-  $MM_redirectLoginFailed = $MM_redirectLoginFailed1;
+  $MM_redirectLoginFailed = ""; //$MM_redirectLoginFailed1;
   $MM_redirecttoReferrer = false;
   
-  mysql_select_db($database_furniture, $furniture);
+  mysqli_select_db($furniture, $database_furniture);
   
-  $LoginRS__query=sprintf("SELECT username, password, email FROM clients WHERE username='%s' AND password='%s'",
+  // Yep, I removed the PW at the client request :/
+  // AND password='%s'
+  $LoginRS__query=sprintf("SELECT username, password, email FROM clients WHERE username='%s'",
     get_magic_quotes_gpc() ? $loginUsername : addslashes($loginUsername), get_magic_quotes_gpc() ? $password : addslashes($password)); 
    
-  $LoginRS = mysql_query($LoginRS__query, $furniture) or die(mysql_error());
-  $loginFoundUser = mysql_num_rows($LoginRS);
-  $row_login = mysql_fetch_assoc($LoginRS);
+  $LoginRS = mysqli_query($furniture, $LoginRS__query) or die(mysql_error());
 
-  $theuseremail=$row_login['email'];
+  $loginFoundUser = $LoginRS->num_rows;
+  $row_login      = $LoginRS->fetch_assoc();
+
+  $theuseremail   = $row_login['email'];
   
  }
  if ($loginFoundUser) {
+     echo "<h1>$loginFoundUser</h1>";
+
      $loginStrGroup = "";
     
     //declare 3 session variables and assign them
@@ -385,7 +450,7 @@ if($attempts!="4"){
 
                             <div class="social-logins">
                                 <div class="fb-login social-login">
-                                    <a data-analytics_details="facebook" data-analytics_event="Sign Up" data-analytics_location="sign up page" href="<?php echo htmlspecialchars($loginUrl); ?>"><div class="ml-icon ml-facebook-login"></div>
+                                    <a data-analytics_details="facebook" data-analytics_event="Sign Up" data-analytics_location="sign up page" href="<?php echo $loginURL; ?>"><div class="ml-icon ml-facebook-login"></div>
                                     </a>
                                 </div>
                             </div>

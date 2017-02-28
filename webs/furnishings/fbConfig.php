@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 //Include Facebook SDK
 require_once 'inc/facebook.php';
@@ -9,7 +9,7 @@ require_once 'inc/facebook.php';
  */
 $appId = '253028625122348'; //Facebook App ID
 $appSecret = '7e77f6e64b3e51dea46a9ce66b5b0134'; // Facebook App Secret
-$redirectURL = 'http://localhost:8888/cf/product-alerts/webs/furnishings/login.php'; // Callback URL
+$redirectURL = 'http://localhost:8888/cf/product-alerts/webs/furnishings/index.php'; // Callback URL
 $fbPermissions = 'email';  //Required facebook permissions
 
 //Call Facebook API
