@@ -217,6 +217,23 @@ input[type="button"].btn-block {
     opacity: .5
 }
 
+.tab-active {
+    color: white !important;
+    background-color: #e10e5d !important;
+    border-color: #e10e5d !important;
+
+}
+#text-alerts {
+    float: right;
+    width: 40%;
+    margin: 0 5%;  
+}
+#email-alerts {
+    float: left;
+    width: 40%;
+    margin: 0 5%;  
+}
+
 @media (min-width: 992px) {
     .btn-main:hover,
     #home-page #cms-tile-3 .link-text:hover {
@@ -486,6 +503,7 @@ span > a {
 }
 .text-center {
 	text-align: center;
+    min-height: 100px;
 }
 .share-icons h2 {
 	color: #595a5c;
@@ -551,4 +569,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 .pageapp-login .boxed-layout div input {
     padding-left: 0px;
+}
+
+/* index.php page */
+.one-half-responsive {
+    width: 60%;
+    float: none;
+    margin-right: auto;
+    margin-left: auto;
 }

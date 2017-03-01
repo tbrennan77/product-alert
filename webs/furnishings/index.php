@@ -35,7 +35,7 @@ if(!$fbUser){
     );
     $userData = $user->checkUser($fbUserData);
     
-    print_r($userData);
+    // print_r($userData);
 
     //Put user data into session
     $_SESSION['userData'] = $userData;
@@ -105,6 +105,8 @@ $totalRows_Recordset2 = $Recordset2->num_rows;
 <link href="styles/framework.css"       rel="stylesheet" type="text/css">
 <link href="styles/font-awesome.css"    rel="stylesheet" type="text/css">
 <link href="styles/animate.css"         rel="stylesheet" type="text/css">
+<link href="styles/overrides.css"       rel="stylesheet" type="text/css">
+<link href="styles/hamburgers.css"      rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jqueryui.js"></script>
@@ -156,7 +158,24 @@ function addalerts(cat,user,alerts){
 //javascript:window.close();
    }
 
+$(document).ready(function(){
 
+	$("#email-alerts").click(function(){
+	    $(".text-alerts").hide();
+	    $(".email-alerts").show();
+
+	    $("#email-alerts").addClass("tab-active" );
+	    $("#text-alerts").removeClass("tab-active" );
+	});
+
+	$("#text-alerts").click(function(){
+	    $(".text-alerts").show();
+	    $(".email-alerts").hide();
+
+	   	$("#email-alerts").removeClass( "tab-active" );
+	    $("#text-alerts").addClass( "tab-active" );
+	});
+});
 </script>
 
 
@@ -175,7 +194,13 @@ function addalerts(cat,user,alerts){
 </div>
     
 <div id="header-fixed" class="header-light">
-    <a class="header-icon-left open-left-sidebar" href="#"><i class="fa fa-navicon"></i></a>
+    <a class="header-icon-left open-left-sidebar" href="#">
+        <button class="hamburger hamburger--arrow" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span> 
+          </span>
+        </button>
+    </a>
     <a class="header-icon-two open-header-menu disabled" href="#"><i class="fa fa-angle-down"></i></a>
     <a class="header-logo" href="#"></a>
     <a class="header-icon-right" href="logout.php">Logout</a>
@@ -183,7 +208,7 @@ function addalerts(cat,user,alerts){
     <div class="header-menu-overlay"></div>
     <div class="header-menu header-menu-light">
         <a href="index.html" class="active-header-item"><i class="fa fa-home"></i>Homepage<i class="fa fa-circle"></i></a>
-        <a href="features-typography.html"><i class="fa fa-cog"></i>HOME<i class="fa fa-circle"></i></a>
+        <a href="features-typography.html"><i class="fa fa-cog"></i>Features<i class="fa fa-circle"></i></a>
         <a href="gallery-square.html"><i class="fa fa-camera"></i>Media<i class="fa fa-circle"></i></a>
         <a href="page-sitemap.html"><i class="fa fa-file-o"></i>SiteMap<i class="fa fa-circle"></i></a>
         <a href="contact.html"><i class="fa fa-envelope-o"></i>Contact<i class="fa fa-circle"></i></a>
@@ -334,7 +359,11 @@ function addalerts(cat,user,alerts){
             
             <div class="content">                
                 <div class="container heading-style-5">
-                    <h4 class="heading-title">My Furniture WishList</h4>
+               	    <div class="boxed-layout">
+                        <div style="text-align: center;">
+                            <h2>Manage Wishlist</h2>
+                        </div>
+                     </div>
                     <i class="fa fa-check heading-icon"></i>
                     <div class="line bg-black"></div>
                     <p class="heading-subtitle">
@@ -344,9 +373,13 @@ function addalerts(cat,user,alerts){
 
                 <div class="decoration"></div>
 
+                <div class="text-center">
+                	<button id="email-alerts" class="btn-block btn-main btn tab-active">Email</button><button id="text-alerts" class="btn-block btn-main btn ">Text</button>
+                </div>
+
                 <div class="container no-bottom">
-                    <div class="one-half-responsive">
-                        <h4>Email Alerts</h4>
+                    <div class="one-half-responsive email-alerts">
+                        <h2>Email Alerts</h2>
                         <p>
                             Click the check green to receive email alerts!
                         </p>
@@ -359,6 +392,8 @@ $thehasemailalert=$row_Recordset1['hasemailalert'];
 $thecustid=$row_Recordset1['userid'];
 //$theemailalert=$row_Recordset1['email_alert'];
 //$thetextalert=$row_Recordset1['text_alert'];
+
+
 if($thehasemailalert==0){
 	$showalert="";
 } else {
@@ -374,8 +409,8 @@ if($thehasemailalert==0){
 ?>
                         <div class="decoration"></div>
                     </div>
-                    <div class="one-half-responsive last-column">
-                        <h4>Text Alerts</h4>
+                    <div class="one-half-responsive text-alerts" style="display: none;">
+                        <h2>Text Alerts</h2>
                         <p>
                             Click the check green to receive text alerts!
                         </p>
@@ -405,22 +440,38 @@ if($thehastextalert==0){
                 </div>
                 <div class="decoration"></div>   
                 
-                <div class="container-fullscreen footer footer-light">
-                    <a href="#" class="footer-logo"></a>
-                    <p class="half-bottom center-text">&nbsp;</p>
-                    <div class="decoration"></div>
-                    <div class="footer-socials">
-                     
-                        <div class="clear"></div>
-                    </div>
-                    <div class="decoration"></div>
-                    <p class="small-text no-bottom center-text">Copyright 2017</p>
-                </div>
-                <div class="footer-clear disabled"></div>
-                
+
             </div>
         </div>
     </div>  
+
+                <div id="footer">
+                <div class="text-center">
+                    <div class="share-icons">
+                        <h2>FOLLOW US ON SOCIAL</h2>
+                        <p>
+                            <span>
+                                <a class="pinterest" href="http://www.pinterest.com/" target="_blank">
+                                    <img alt="Pinterest" src="images/pinterest-c14212a7e4eb48bb464beb5d8546cc12.png">
+                                </a>
+                                <a class="facebook" href="http://facebook.com/" target="_blank">
+                                    <img alt="Facebook" src="images/facebook-7857dd5132dad951307a35b746307f7c.png">
+                                </a>
+                                <a class="twitter" href="https://twitter.com" target="_blank">
+                                    <img alt="Twitter" src="images/twitter-d4a0376da5a90719d29a98a0ab83ad03.png">
+                                </a>
+                                <a class="instagram" href="http://instagram.com" target="_blank">
+                                    <img alt="Instagram" src="images/instagram-a4a3e5e92d2b999c24051428cf69d2c4.png">
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="copyright-notice">
+                        Copyright © 2017 MyFurnitureWishlist.com All Rights Reserved.
+                    </div>
+            </div>
+
+
     <a href="#" class="back-to-top-badge"><i class="fa fa-caret-up"></i>Back to top</a>
 </div>
     

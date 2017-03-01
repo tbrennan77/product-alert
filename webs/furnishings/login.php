@@ -36,7 +36,7 @@ if(!$fbUser){
     );
     $userData = $user->checkUser($fbUserData);
     
-    print_r($userData);
+    // print_r($userData);
 
     //Put user data into session
     $_SESSION['userData'] = $userData;
@@ -46,7 +46,7 @@ if(!$fbUser){
         $output = '<h1>Facebook Profile Details </h1>';
         $output .= '<img src="'.$userData['picture'].'">';
         $output .= '<br/>Facebook ID : ' . $userData['oauth_uid'];
-        $output .= '<br/>Name : ' . $userData['first_name'].' '.$userData['last_name'];
+        $output .= '<br/>Name : ' . $userData['Fname'].' '.$userData['Lname'];
         $output .= '<br/>Email : ' . $userData['email'];
         $output .= '<br/>Gender : ' . $userData['gender'];
         $output .= '<br/>Locale : ' . $userData['locale'];
@@ -157,7 +157,7 @@ if($attempts!="4"){
   
  }
  if ($loginFoundUser) {
-     echo "<h1>$loginFoundUser</h1>";
+     // echo "<h1>$loginFoundUser</h1>";
 
      $loginStrGroup = "";
     

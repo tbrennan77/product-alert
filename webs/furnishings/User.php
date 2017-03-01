@@ -28,7 +28,7 @@ class User {
 						  AND oauth_uid = '".$userData['oauth_uid']."'";
 			$prevResult = $this->db->query($prevQuery);
 
-			echo $prevResult->num_rows."<br />";
+			// echo $prevResult->num_rows."<br />";
 
 			// Check the Clients table
 			//$user_check_query = "SELECT * FROM clients WHERE tokenid = '".$userData['oauth_uid']."' ";
@@ -72,7 +72,7 @@ class User {
 						oauth_provider = '".$userData['oauth_provider']."' 
 					AND oauth_uid = '".$userData['oauth_uid']."'";
 				$update = $this->db->query($query);
-				echo $query;
+				// echo $query;
 
 			} else {
 
@@ -92,7 +92,7 @@ class User {
 							created = '".date("Y-m-d H:i:s")."'";
 				$insert = $this->db->query($query);
 
-				echo $query;
+				// echo $query;
 			}
 			
 			//Get user data from the database
