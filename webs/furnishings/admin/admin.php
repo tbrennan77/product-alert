@@ -41,16 +41,7 @@ require_once('Data/furniture.php');
 </head>
 
 <body class="landing-homepage"> 
-    
-<div id="preloader">
-	<div id="status">
-        <div class="preloader-logo"></div>
-        <h3 class="center-text">Welcome</h3>
-        <p class="center-text smaller-text">
-            We're loading the content, give us a second. This won't take long!
-        </p>
-    </div>
-</div>
+
     
 <div class="all-elements">
     <div class="landing-header">

@@ -1,11 +1,21 @@
 <?php
 class User {
+	
+	// Development
 	private $dbHost     = "localhost";
     private $dbUsername = "root";
     private $dbPassword = "harley77";
     private $dbName     = "hinklema_furniture";
 	private $userTbl    = 'clients';
 	
+	/*
+	// Production
+	private $dbHost     = "localhost";
+    private $dbUsername = "hinklema_bhinkle";
+    private $dbPassword = "052597";
+    private $dbName     = "hinklema_furniture";
+	private $userTbl    = 'clients';
+	*/
 	function __construct(){
 		if(!isset($this->db)){
             // Connect to the database

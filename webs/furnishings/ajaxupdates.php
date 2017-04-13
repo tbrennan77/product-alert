@@ -1,46 +1,60 @@
 <?php
 require_once('Data/furniture.php');
-$ptype=$_POST['type'];
- $gettype=$_GET['type'];
- $requesttype=$_REQUEST['type'];
- 		
-		 if($requesttype==1){
-	  
-$thesession=$_GET['sessionid'];
-$theuserid=$_GET['userid'];
-$thecatid=$_GET['catid'];
-$thetalert=$_GET['talert'];
 
+@ini_set('display_errors', 1);
+@ini_set('track_errors', 0);
+error_reporting(-1);
 
+$ptype       = (isset($_POST['type']) ? $_POST['type'] : null);
+$gettype     = (isset($_GET['type']) ? $_GET['type'] : null);
+$requesttype = (isset($_REQUEST['type']) ? $_REQUEST['type'] : null);
 
-  mysql_select_db($database_furniture, $furniture);
-  $insertSQL = "CALL insertalerts($theuserid,$thecatid,$thetalert)"; 
-  $Result1 = mysql_query($insertSQL, $furniture) or die(mysql_error()); 
+echo("Request type:".$requesttype);
+
+  if($requesttype==1) {
+	
+    try {
+
+      $thesession = (isset($_GET['sessionid']) ? $_GET['sessionid'] : null);
+      $theuserid  = $_GET['userid'];
+      $thecatid   = $_GET['catid'];
+      $thetalert  = $_GET['talert'];
+
+      echo($theuserid);
+
+      mysqli_select_db($furniture, $database_furniture);
+
+      $insertSQL = "CALL insertalerts($theuserid,$thecatid,$thetalert)"; 
+      $Result1 = mysqli_query($furniture, $insertSQL) or die(mysql_error()); 
+
+    } catch (Exception $e) {
+      echo($e->getMessage());
+    }
+
   }   
   
    if($gettype==2){
-  $theoderid =  $_GET['orderid'];
-$theqty =  $_GET['qty'];
-$theoldprice =  $_GET['price'];
-$theship1=$_GET['ship'];
-$thecomments=htmlspecialchars($_GET['comments']);
-$tcardslit=$_GET['cardslit'];
-$tminilock=$_GET['minilock'];
-$tmakelock=$_GET['makelock'];
+      $theoderid =  $_GET['orderid'];
+      $theqty =  $_GET['qty'];
+      $theoldprice =  $_GET['price'];
+      $theship1=$_GET['ship'];
+      $thecomments=htmlspecialchars($_GET['comments']);
+      $tcardslit=$_GET['cardslit'];
+      $tminilock=$_GET['minilock'];
+      $tmakelock=$_GET['makelock'];
 
+      mysql_select_db($database_mini, $mini);
 
- mysql_select_db($database_mini, $mini);
-if($theqty==0){
-	
-$insertSQL = "delete from oders  where oderid = $theoderid";
-} else {
+      if($theqty == 0){
+        $insertSQL = "delete from oders  where oderid = $theoderid";
+      } else {
 
-// see if the invoice_id from shipping_invoice is not null, then update the record
-$insertSQL = "update oders set qty='$theqty', price='$theoldprice',  shipping='$theship1', comments='$thecomments', cardslit='$tcardslit', minilock='$tminilock', makelock='$tmakelock' where oderid = $theoderid";
-}
-$Result1 = mysql_query($insertSQL, $mini) or die(mysql_error());   
+      // see if the invoice_id from shipping_invoice is not null, then update the record
+      $insertSQL = "update oders set qty='$theqty', price='$theoldprice',  shipping='$theship1', comments='$thecomments', cardslit='$tcardslit', minilock='$tminilock', makelock='$tmakelock' where oderid = $theoderid";
+      }
 
- }
+      $Result1 = mysql_query($insertSQL, $mini) or die(mysql_error());   
+    }
 
 
  if($requesttype==3){

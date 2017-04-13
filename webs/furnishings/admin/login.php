@@ -33,9 +33,9 @@ if (!isset($_SESSION)) {
 
 
 $loginFormAction = $_SERVER['PHP_SELF'];
-if (isset($_GET['accesscheck'])) {
-  $_SESSION['PrevUrl'] = htmlentities($_GET['accesscheck']);
-}
+//if (isset($_GET['accesscheck'])) {
+  //$_SESSION['PrevUrl'] = htmlentities($_GET['accesscheck']);
+//}
 
 if (isset($_POST['username'])) {
   $loginUsername=htmlentities($_POST['username']);

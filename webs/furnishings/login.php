@@ -203,9 +203,8 @@ if($attempts!="4"){
     
 <title>MyFurnitureWishlist.com</title>
 
-<link href="styles/style.css"           rel="stylesheet" type="text/css">
-<link href="styles/menus.css"           rel="stylesheet" type="text/css">
-<link href="styles/framework.css"       rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
 <link href="styles/font-awesome.css"    rel="stylesheet" type="text/css">
 <link href="styles/animate.css"         rel="stylesheet" type="text/css">
 <link href="styles/overrides.css"       rel="stylesheet" type="text/css">
@@ -213,254 +212,35 @@ if($attempts!="4"){
 
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jqueryui.js"></script>
-<script type="text/javascript" src="scripts/framework-plugins.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script type="text/javascript" src="scripts/custom.js"></script>
 </head>
 
-<body class="dual-sidebar"> 
-    
-<div id="preloader">
-	<div id="status">
-        <div class="preloader-logo"></div>
-        <h3 class="center-text">Welcome</h3>
-        <p class="center-text smaller-text">
-            We're loading the content, give us a second. This won't take long!
-        </p>
-    </div>
-</div>
-    
-<div id="header-fixed" class="header-light">
-    <a class="header-icon-left open-left-sidebar" href="#">
-        <button class="hamburger hamburger--arrow" type="button">
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span> 
-          </span>
-        </button>
-    </a>
-    <a class="header-icon-two open-header-menu disabled" href="#"><i class="fa fa-angle-down"></i></a>
-    <a class="header-logo" href="#"></a>
-    <a class="header-icon-right open-right-sidebar" href="#" style="display: none;"><i class="fa fa-envelope-o"></i></a>
-    
-    <div class="header-menu-overlay"></div>
-    <div class="header-menu header-menu-light">
-        <a href="index.html" class="active-header-item"><i class="fa fa-home"></i>Homepage<i class="fa fa-circle"></i></a>
-        <a href="features-typography.html"><i class="fa fa-cog"></i>Features<i class="fa fa-circle"></i></a>
-        <a href="gallery-square.html"><i class="fa fa-camera"></i>Media<i class="fa fa-circle"></i></a>
-        <a href="page-sitemap.html"><i class="fa fa-file-o"></i>SiteMap<i class="fa fa-circle"></i></a>
-        <a href="contact.html"><i class="fa fa-envelope-o"></i>Contact<i class="fa fa-circle"></i></a>
-        <a href="#" class="close-header-menu"><i class="fa fa-times"></i>Close<i class="fa fa-circle"></i></a>
-    </div> 
-</div> 
-    
-        
-<div id="footer-fixed" class="footer-menu footer-light disabled">
-    <a href="index.html" class="active-footer-item footer-mobile"><i class="fa fa-home"></i>Home</a>
-    <a href="features-typography.html" class="footer-mobile"><i class="fa fa-cog"></i>Features</a>
-    <a href="gallery-square.html" class="footer-mobile"><i class="fa fa-camera"></i>Media</a>
-    <a href="page-sitemap.html" class="footer-mobile"><i class="fa fa-navicon"></i>Sitemap</a>
-    <a href="contact.html" class="footer-mobile"><i class="fa fa-envelope-o"></i>Contact</a>
-    <a href="#" class="footer-tablet"><i class="fa fa-phone"></i>Call</a>
-    <a href="#" class="footer-tablet"><i class="fa fa-comments"></i>Text</a>
-    <a href="#" class="footer-tablet"><i class="fa fa-facebook"></i>Like</a>
-    <a href="#" class="footer-tablet"><i class="fa fa-twitter"></i>Follow</a>
-</div>
-    
-<div class="gallery-fix"></div> <!-- Important for all pages that have galleries or portfolios -->
-            
-<div class="all-elements">
-    <div class="snap-drawers">
-        <div class="snap-drawer snap-drawer-left sidebar-light-clean">        
-            <div class="sidebar-header">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-phone"></i></a>
-                <a href="#"><i class="fa fa-comment-o"></i></a>
-                <a class="close-sidebar" href="#"><i class="fa fa-times"></i></a>
-            </div>   
-            
-            <div class="sidebar-logo"></div>
-            
-            <div class="sidebar-divider no-bottom"></div>
+<body>     
 
-            <p class="sidebar-divider">Navigation</p>
-            <div class="sidebar-menu">
-               
-                    <a class="menu-item" href="index.php">
-                        <i class="fa fa-home bg-red-dark"></i>
-                        <em>Home</em>
-                        <strong></strong>
-                    </a> 
-                   
-                             
-               
-                    <a class="menu-item" href="editprofile.php">
-                        <i class="fa fa-cog bg-orange-dark"></i>
-                        <em>Profile</em>
-                        <strong></strong>
-                    </a> 
-                   
-                   
-               
-                    <a class="menu-item" href="<?php echo $logoutAction ?>">
-                        <i class="fa fa-navicon bg-green-dark"></i>
-                        <em>Log Out</em>
-                        <strong></strong>
-                    </a> 
-                                
-              
-                   
-               
-               
-            </div>
-                                  
-           
-                <a class="menu-item close-sidebar" href="#">
-                    <i class="fa fa-times bg-red-dark"></i>
-                    <em>Close</em>
-                </a>
-            </div>
-            
-            <p class="sidebar-footer">Copyright 2017. All rights reserved</p>
-            
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 text-header text-center">
+            <a class="header-logo" href="#"><img src="http://www.myfurniturewishlist.com/images/my_furniture_wishlist_logo.png" class="img-fluid" /></a>
+            <h1 style="padding-bottom: 15px;">My Furniture Wishlist</h1>
+            <p>Get notified when what you want arrives!</p>
         </div>
-        
-        <!--Right Sidebar -->
-        
-        <!--Right Sidebar -->
-        
-        <div class="snap-drawer snap-drawer-right sidebar-light-clean">
-            <div class="sidebar-header">
-                <a class="close-sidebar" href="#"><i class="fa fa-times"></i></a>
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-phone"></i></a>
-                <a href="#"><i class="fa fa-comment-o"></i></a>
-            </div>   
-            
-            <div class="sidebar-logo"></div>
-                        
-            <div class="sidebar-divider no-bottom"></div>
-            
-            <p class="sidebar-divider"></p>
-            
-            <div class="sidebar-menu">
-                <div class="has-submenu">
-                   
-                    <div class="submenu change-colors">
-                        <div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="has-submenu">
-                    
-                    <div class="submenu change-colors">
-                        <div>
-                          
-                        </div>                        
-                        <div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        
-            <p class="sidebar-divider"></p>
-            
-            <div class="sidebar-menu">
-                <a class="menu-item" href="#">
-                    <i class="fa fa-facebook facebook-color"></i>
-                    <em>Facebook</em>
-                </a>                   
-                           
-                <a class="menu-item" href="#">
-                    <i class="fa fa-google-plus google-color"></i>
-                    <em>Google Plus</em>
-                </a>                    
-                 
-            </div>
-                        
-            <p class="sidebar-divider">Send an email</p>
-            
-            <div class="container no-bottom">
-                <div class="sidebar-form contact-form no-bottom"> 
-                    <em>
-                        Your message is important to us and we reply to all of them in less than 48 hours.
-                    </em>
-                    <div class="formSuccessMessageWrap" id="formSuccessMessageWrap">
-                        Awesome! We'll get back to you!
-                    </div>
-                    <form action="login.php" method="post" class="contactForm" id="contactForm">
-                        <fieldset>
-                            <div class="formValidationError" id="contactNameFieldError">Name is required!</div>             
-                            <div class="formValidationError" id="contactEmailFieldError">Mail address required!</div> 
-                            <div class="formValidationError" id="contactEmailFieldError2">Mail address must be valid!</div> 
-                            <div class="formValidationError" id="contactMessageTextareaError">Message field is empty!</div>   
-                            <div class="formFieldWrap">
-                                <input onfocus="if (this.value=='Name') this.value = ''" onblur="if (this.value=='') this.value = 'Name'" type="text" name="contactNameField" value="Name" class="contactField requiredField" id="contactNameField"/>
-                            </div>
-                            <div class="formFieldWrap">
-                                <input onfocus="if (this.value=='Email') this.value = ''" onblur="if (this.value=='') this.value = 'Email'" type="text" name="contactEmailField" value="Email" class="contactField requiredField requiredEmailField" id="contactEmailField"/>
-                            </div>
-                            <div class="formTextareaWrap">
-                                <textarea onfocus="if (this.value=='Message') this.value = ''" onblur="if (this.value=='') this.value = 'Message'" name="contactMessageTextarea" class="contactTextarea requiredField" id="contactMessageTextarea">Message</textarea>
-                            </div>
-                            <div class="formSubmitButtonErrorsWrap">
-                                <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="contactSubmitButton" value="SUBMIT" data-formId="contactForm"/>
-                            </div>
-                        </fieldset>
-                    </form>       
-                </div>
-            </div>
-            
-            <p class="sidebar-divider">Contact Us</p>
-            
-            <div class="sidebar-menu">
-                <a class="menu-item" href="tel:+123 456 7890">
-                    <i class="fa fa-phone bg-green-dark"></i>
-                    <em>Call Us</em>
-                </a>                   
-                <a class="menu-item" href="sms:+123 456 7890">
-                    <i class="fa fa-comment-o bg-blue-dark"></i>
-                    <em>Text Us</em>
-                </a>                 
-                <a class="menu-item" href="mailto:someone@yoursite.com?subject=Message from ThemeForest">
-                    <i class="fa fa-envelope-o bg-magenta-dark"></i>
-                    <em>Mail Us</em>
-                </a>    
-                <a class="menu-item close-sidebar" href="#">
-                    <i class="fa fa-times bg-red-dark"></i>
-                    <em>Close</em>
-                    <i class="fa fa-circle"></i>
+        <div class="col-sm-12 text-center" style="display: none;">
+            <div class="fb-login social-login">
+               <a data-analytics_details="facebook" data-analytics_event="Sign Up" data-analytics_location="sign up page" href="<?php echo $loginURL; ?>">
+                    <div class="ml-icon ml-facebook-login"></div>
                 </a>
             </div>
-            
-            <p class="sidebar-footer">Copyright <?php echo $year ?>. All rights reserved</p>
-        </div>        
-        
-        <div id="content" class="snap-content">      
-            <div class="header-clear"></div>
-            <div class="pageapp-login bg-5 cover-screen">    
-                <div class="pageapp-login-content cover-center">
-                  <div class="boxed-layout">
-                        <div class="text-center">
-                            <h2>Sign In</h2>
-                        </div>
-                        <form id="loginform" class="form-vertical no-padding no-margin" action="<?PHP echo $loginFormAction; ?>" name="loginform" method="post">
+        </div>
+        <div class="col-sm-12">
+            <form id="loginform" class="form-vertical no-padding no-margin" action="<?PHP echo $loginFormAction; ?>" name="loginform" method="post">
 
-                            <div class="social-logins">
-                                <div class="fb-login social-login">
-                                    <a data-analytics_details="facebook" data-analytics_event="Sign Up" data-analytics_location="sign up page" href="<?php echo $loginURL; ?>"><div class="ml-icon ml-facebook-login"></div>
-                                    </a>
-                                </div>
+                            
+                            <div class="form-group">
+                                <input class="form-control" id="username" name="username" type="text" placeholder="Enter Email or Phone" />
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="username">Username</label>
-                                <input class="form-control" id="username" name="username" type="text" placeholder="Enter email or phone" />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="password">Password <a href="#" class="page-login-forgot">I forgot it :(</a></label>
-                                <input class="form-control" type="password" id="password" name="password" value="Password" />
+                                <input class="form-control" type="password" id="password" name="password" value="Password" placeholder="Enter Password" />
                             </div>
 
 
@@ -475,116 +255,10 @@ if($attempts!="4"){
                             Need to register? <a href="register.php">It's free and easy!</a>
                         </div>
                     </form>
-                       
-                    <div class=""></div>
-                     <?php  // put facebook login button here ?>
-                                       
-                    </div>
-                </div>
-                <div class="overlay bg-black"></div>
-               
-            </div>  
-            <div id="sell-link" class="">
-                <h3>
-                    <a href="https://communityfurnishings.com/">Want to sell some furniture?</a>
-                </h3>
-                <img alt="Truck icon sm" src="images/truck_icon_sm-51825532a375a3dadfc9d26f741ababb.png">
-            </div> 
-            <div id="footer">
-                <div class="text-center">
-                    <div class="share-icons">
-                        <h2>FOLLOW US ON SOCIAL</h2>
-                        <p>
-                            <span>
-                                <a class="pinterest" href="http://www.pinterest.com/" target="_blank">
-                                    <img alt="Pinterest" src="images/pinterest-c14212a7e4eb48bb464beb5d8546cc12.png">
-                                </a>
-                                <a class="facebook" href="http://facebook.com/" target="_blank">
-                                    <img alt="Facebook" src="images/facebook-7857dd5132dad951307a35b746307f7c.png">
-                                </a>
-                                <a class="twitter" href="https://twitter.com" target="_blank">
-                                    <img alt="Twitter" src="images/twitter-d4a0376da5a90719d29a98a0ab83ad03.png">
-                                </a>
-                                <a class="instagram" href="http://instagram.com" target="_blank">
-                                    <img alt="Instagram" src="images/instagram-a4a3e5e92d2b999c24051428cf69d2c4.png">
-                                </a>
-                            </span>
-                        </p>
-                    </div>
-                    <div class="copyright-notice">
-                        Copyright © 2017 MyFurnitureWishlist.com All Rights Reserved.
-                    </div>
-            </div>
         </div>
-
-    </div>  
-    <a href="#" class="back-to-top-badge"><i class="fa fa-caret-up"></i>Back to top</a>
-</div>
-    
-    
-<!--Fly up share box and notifications go here -->
-<!--These are the only features that should be placed outside the all-elements class-->
-    
-<div class="share-bottom">
-    <h3>Share Page</h3>
-    <div class="share-socials-bottom">
-        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.themeforest.net/">
-            <i class="fa fa-facebook facebook-color"></i>
-            Facebook
-        </a>
-        <a href="https://twitter.com/home?status=Check%20out%20ThemeForest%20http://www.themeforest.net">
-            <i class="fa fa-twitter twitter-color"></i>
-            Twitter
-        </a>
-        <a href="https://plus.google.com/share?url=http://www.themeforest.net">
-            <i class="fa fa-google-plus google-color"></i>
-            Google
-        </a>
-
-        <a href="https://pinterest.com/pin/create/button/?url=http://www.themeforest.net/&media=https://0.s3.envato.com/files/63790821/profile-image.jpg&description=Themes%20and%20Templates">
-            <i class="fa fa-pinterest-p pinterest-color"></i>
-            Pinterest
-        </a>
-        <a href="sms:">
-            <i class="fa fa-comment-o sms-color"></i>
-            Text
-        </a>
-        <a href="mailto:?&subject=Check this page out!&body=http://www.themeforest.net">
-            <i class="fa fa-envelope-o mail-color"></i>
-            Email
-        </a>
-        <div class="clear"></div>
     </div>
-    <a href="#" class="close-share-bottom">Close</a>
 </div>
-    
-<div class="top-notification-1 top-notification bg-blue-dark">
-    <h4>Did you know?</h4>
-    <p>
-        Easy way to make sure your messages get read!
-    </p>
-    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
-</div>
-<div class="bottom-notification-1 bottom-notification bg-green-dark">
-    <h4>Did you know?</h4>
-    <p>
-        Easy way to make sure your messages get read!
-    </p>
-    <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
-</div> 
-<div class="bottom-notification-2 bottom-notification bg-orange-dark timeout-notification">
-    <h4>Timeout: 5 Seconds</h4>
-    <p>
-        I'll go away on my own after a few seconds!
-    </p>
-</div>
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification">
-    <h4>Timeout: 5 Seconds</h4>
-    <p>
-        I'll go away on my own after a few seconds!
-    </p>
-</div>
-    
+
 </body>
 
 
