@@ -37,11 +37,20 @@ require_once('Data/furniture.php');
 <script type="text/javascript" src="../scripts/jquery.js"></script>
 <script type="text/javascript" src="../scripts/jqueryui.js"></script>
 <script type="text/javascript" src="../scripts/framework-plugins.js"></script>
-<script type="text/javascript" src="../scripts/custom.js"></script>
+<script type="text/javascript" src="../scripts/custom1.js"></script>
 </head>
 
 <body class="landing-homepage"> 
-
+    
+<div id="preloader">
+	<div id="status">
+        <div class="preloader-logo"></div>
+        <h3 class="center-text">Welcome</h3>
+        <p class="center-text smaller-text">
+            We're loading the content, give us a second. This won't take long!
+        </p>
+    </div>
+</div>
     
 <div class="all-elements">
     <div class="landing-header">
@@ -67,11 +76,28 @@ require_once('Data/furniture.php');
         </li>        
         <li>
             <a href="admin_editadmin.php">
-                <i class="fa fa-pencil bg-night-dark"></i>
+                <i class="fa fa-cog bg-night-dark"></i>
                 <em>Administrators</em>
             </a>
+        </li>  
+         <li>
+            <a href="admin_edittexts.php">
+                <i class="fa fa-pencil bg-night-dark"></i>
+                <em>Text & Emails</em>
+            </a>
         </li>        
-            
+             <li>
+            <a href="admin_editcats.php">
+                <i class="fa fa-pencil bg-green-dark"></i>
+                <em>Categories</em>
+            </a>
+        </li> 
+         <li>
+            <a href="admin_editwebsite.php">
+                <i class="fa fa-pencil bg-night-dark"></i>
+                <em>Website Info</em>
+            </a>
+        </li> 
              
         <li>
             <a href="<?php echo $logoutAction ?>">

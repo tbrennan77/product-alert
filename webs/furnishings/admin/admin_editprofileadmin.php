@@ -47,7 +47,7 @@ $totalRows_Recordset11 = mysql_num_rows($Recordset11);
 <script type="text/javascript" src="../scripts/jquery.js"></script>
 <script type="text/javascript" src="../scripts/jqueryui.js"></script>
 <script type="text/javascript" src="../scripts/framework-plugins.js"></script>
-<script type="text/javascript" src="../scripts/custom.js"></script>
+<script type="text/javascript" src="../scripts/custom1.js"></script>
 
 <script language="javascript">
      var request = false;
@@ -140,6 +140,21 @@ $totalRows_Recordset11 = mysql_num_rows($Recordset11);
                         <em>Edit Admins</em>
                         <strong></strong>
                     </a> 
+                    <a class="menu-item" href="admin_edittexts.php">
+                        <i class="fa fa-cog bg-orange-dark"></i>
+                        <em>Add Text/Email</em>
+                        <strong></strong>
+                    </a> 
+                   <a class="menu-item" href="admin_editwebsite.php">
+                        <i class="fa fa-cog bg-orange-dark"></i>
+                        <em>Add Website Data</em>
+                        <strong></strong>
+                    </a>
+                     <a class="menu-item" href="admin_editcats.php">
+                        <i class="fa fa-cog bg-orange-dark"></i>
+                        <em>Add Categories </em>
+                        <strong></strong>
+                    </a>
                    
                    
                

@@ -1,18 +1,21 @@
 <?php 
 include 'Data/logitin.php'; 
 require_once('Data/furniture.php');
-
-	
-	
 	
 mysql_select_db($database_furniture, $furniture);
-$query_Recordset1 = "SELECT * from `administrators` ";
+$query_Recordset1 = "SELECT * from `websitedata` ";
 $Recordset1 = mysql_query($query_Recordset1, $furniture) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
-
-
+$gid=$_GET['ID'];
+if($gid!=''){
+mysql_select_db($database_furniture, $furniture);
+$query_Recordset11 = "SELECT * from `websitedata` where dataid=$gid ";
+$Recordset11 = mysql_query($query_Recordset11, $furniture) or die(mysql_error());
+$row_Recordset11 = mysql_fetch_assoc($Recordset11);
+$totalRows_Recordset11 = mysql_num_rows($Recordset11);	
+}
 ?>
 <!DOCTYPE HTML>
 <head>
@@ -96,7 +99,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
            <p class="sidebar-divider">Navigation</p>
             <div class="sidebar-menu">
                
-                   <a class="menu-item" href="admin.php">
+                      <a class="menu-item" href="admin.php">
                         <i class="fa fa-home bg-red-dark"></i>
                         <em>Admin Home</em>
                         <strong></strong>
@@ -212,30 +215,34 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
             
             <div class="content">                
                 <div class="container heading-style-5">
-                    <h4 class="heading-title">Admininstrators</h4>
+                    <h4 class="heading-title">Website Data Edit</h4>
                     <i class="fa fa-user heading-icon"></i>
                     <div class="line bg-black"></div>
                     <p class="user-list-follow">
-                     <form method="POST" id="addadmin" class="contactform">
-                       Add New Admin: <div class="formFieldWrap">
+                  <?  if($gid==''){ ?>
+
+                     <form method="POST" id="addweb" class="contactform">
+                       Add New Web Verbaige: <div class="formFieldWrap">
                        <div class="pageapp-signup-field">
-                            <i class="fa fa-user"></i>  <input type="text"  onfocus="if (this.value=='UserName') this.value = ''" onblur="if (this.value=='') this.value = 'UserName'" value="UserName" name="username" id="username" class="contactField requiredField requiredusernameField" ></div>
+                            <i class="fa fa-user"></i>  <input type="text"   onfocus="if (this.value=='Verbaige') this.value = ''" onblur="if (this.value=='') this.value = 'Verbaige'" value="Verbaige" name="verbaige" id="verbaige" class="contactField requiredField requiredusernameField" ></div>
  <div class="pageapp-signup-field">
-                            <input type="text" onfocus="if (this.value=='Password') this.value = ''" onblur="if (this.value=='') this.value = 'Password'" value="Password" name="password" id="password" class="contactField requiredField requiredpasswordField" ></div>
-                              <div class="pageapp-signup-field">
-                          <input type="text" value="First Name" name="firstname" id="firstname" class="contactField requiredField requiredfnameField"  onfocus="if (this.value=='First Name') this.value = ''" onblur="if (this.value=='') this.value = 'First Name'"></div>
-                                  <input type="text" value="Last Name" name="lastname" id="lastname" class="contactField requiredField requiredlastnameField"  onfocus="if (this.value=='Last Name') this.value = ''" onblur="if (this.value=='') this.value = 'Last Name'">
-                                    <div class="pageapp-signup-field">
-                            
-                                    <input type="text" value="Phone" name="phone" id="phone" class="contactField requiredField requiredphoneField"  onfocus="if (this.value=='Phone') this.value = ''" onblur="if (this.value=='') this.value = 'Phone'"></div>
-                                    <input type="text" value="Email" name="email" id="email" class="contactField requiredField requiredEmailField" onfocus="if (this.value=='Email') this.value = ''" onblur="if (this.value=='') this.value = 'Email'" >
-                                   
-                   <input type="hidden" value="<?php echo $today ?>" name="date" id="date" >
-             <input type="hidden" name="clientid" id="clientid" value="<?php echo $row_Recordset11['admin_id']; ?>">
-                                  
-                            <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="addadmin" value="Add Admin" data-formId="addadmin"/>       
+               
+                            <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="addweb" value="Add Verbaige" data-formId="addweb"/>       
                             </div>
                             </form>
+                            <? } else {  ?>
+                             <form method="POST" id="editwebs" class="contactform">
+                       Edit Web Verbaige: <div class="formFieldWrap">
+                       <div class="pageapp-signup-field">
+                            <i class="fa fa-user"></i>  <input type="text"    value="<?php echo $row_Recordset11['verbaige']; ?>
+" name="verbaige" id="verbaige" class="contactField requiredField requiredusernameField" ></div>
+ <div class="pageapp-signup-field">
+                <input type="hidden"  value="<?php echo $gid ?>
+" name="ggid" id="ggid" >
+                            <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="editwebs" value="Edit Verbaige" data-formId="editwebs"/>       
+                            </div>
+                            </form>
+                            <? } ?>
                     </p>
                 </div> 
                 
@@ -246,17 +253,15 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 	
 					
    do { 
-$thefname=$row_Recordset1['Fname'];
-$thelname=$row_Recordset1['Lname'];
-$theemail=$row_Recordset1['email'];
-$thecustid=$row_Recordset1['admin_id'];
+$thefname=$row_Recordset1['verbaige'];
+$thecustid=$row_Recordset1['dataid'];
 
 ?>               
                 <div class="one-third-responsive">
                     <p class="user-list-follow">
                         <img src="../images/pictures/1s.jpg" alt="img">
-                        <strong><?php echo $thefname ?> <?php echo $thelname ?><br><em><?php echo $theemail ?></em></strong>
-                        <a href="admin_editprofileadmin.php?ID=<?php echo $thecustid ?>&uemail=<?php echo $theemail ?>" class="follow">Edit Admin</a>
+                        <strong><?php echo $thefname ?> </em></strong>
+                        <a href="admin_editwebsite.php?ID=<?php echo $thecustid ?>" class="follow">Edit Verbaige</a>
                     </p>
                     <div class="decoration"></div>                
                    

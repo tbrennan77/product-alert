@@ -33,9 +33,9 @@ if (!isset($_SESSION)) {
 
 
 $loginFormAction = $_SERVER['PHP_SELF'];
-//if (isset($_GET['accesscheck'])) {
-  //$_SESSION['PrevUrl'] = htmlentities($_GET['accesscheck']);
-//}
+if (isset($_GET['accesscheck'])) {
+  $_SESSION['PrevUrl'] = htmlentities($_GET['accesscheck']);
+}
 
 if (isset($_POST['username'])) {
   $loginUsername=htmlentities($_POST['username']);
@@ -127,7 +127,7 @@ mysql_select_db($database_furniture, $furniture);
 <script type="text/javascript" src="../scripts/jquery.js"></script>
 <script type="text/javascript" src="../scripts/jqueryui.js"></script>
 <script type="text/javascript" src="../scripts/framework-plugins.js"></script>
-<script type="text/javascript" src="../scripts/custom.js"></script>
+<script type="text/javascript" src="../scripts/custom1.js"></script>
 </head>
 
 <body class="dual-sidebar"> 

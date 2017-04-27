@@ -1,20 +1,28 @@
 <?php 
-include 'Data/logitin.php'; 
 require_once('Data/furniture.php');
+ include 'Data/logitin.php'; 
+$userid=$_GET['ID'];
+$temail=$_GET['uemail'];
 
-	
-	
-	
+
 mysql_select_db($database_furniture, $furniture);
-$query_Recordset1 = "SELECT * from `administrators` ";
+$query_Recordset1 = "SELECT cat_id, cat_name, cat_extra from `categories` order by cat_name";
 $Recordset1 = mysql_query($query_Recordset1, $furniture) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
-
-
-?>
-<!DOCTYPE HTML>
+$thecat_id=$_POST['cat_id'];
+$thecat_name=$_POST['name'];
+$thecat_extra=$_POST['extra'];
+if(isset($_POST['cat_id'])){
+ mysql_select_db($database_furniture, $furniture);
+  $insertSQL = "update categories set cat_name='$thecat_name', cat_extra='$thecat_extra' where cat_id=$thecat_id"; 
+  $Result1 = mysql_query($insertSQL, $furniture) or die(mysql_error()); 
+  
+  header('Location: admin_editcats.php'); 
+}
+  
+?><!DOCTYPE HTML>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
@@ -51,6 +59,54 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 <script type="text/javascript" src="../scripts/framework-plugins.js"></script>
 <script type="text/javascript" src="../scripts/custom1.js"></script>
 
+<script language="javascript">
+     var request = false;
+   try {
+     request = new XMLHttpRequest();
+   } catch (trymicrosoft) {
+     try {
+	
+       request = new ActiveXObject("Msxml2.XMLHTTP");
+     } catch (othermicrosoft) {
+       try {
+         request = new ActiveXObject("Microsoft.XMLHTTP");
+       } catch (failed) {
+         request = false;
+       }  
+     }
+   }</script>
+
+<script language="javascript">
+function editcat(catids,type){
+	
+	 var url = "ajaxupdates.php?talert="+ escape(type) + "&catid="+ escape(catids) + "&type=2";  
+	
+	
+     request.open("GET", url , true);
+	// alert(url);
+	 alert('Category Has Been Deleted!');
+     request.onreadystatechange = updatePage();
+     request.send(null);
+
+}
+
+ function updatePage() {
+ 
+  if (request.readyState == 4) {
+ var response = request.responseText;
+      var updates = new Array();
+    if(response.indexOf('|' != -1)) {
+    	updates = response.split("|");
+		
+		if(updates != 0){
+			alert(updates);
+	
+} }    }
+//javascript:window.close();
+   }
+
+
+</script>
 </head>
 
 <body class="dual-sidebar"> 
@@ -68,7 +124,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 <div id="header-fixed" class="header-light">
     <a class="header-icon-left open-left-sidebar" href="#"><i class="fa fa-navicon"></i></a>
     <a class="header-icon-two open-header-menu disabled" href="#"><i class="fa fa-angle-down"></i></a>
-    <a class="header-logo" href="#"></a>
+    <a class="header-logo" href="admin.php"></a>
    
     
     <div class="header-menu-overlay"></div>
@@ -77,7 +133,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
     
         
 <div id="footer-fixed" class="footer-menu footer-light disabled">
-  
+    
 </div>
     
 <div class="gallery-fix"></div> <!-- Important for all pages that have galleries or portfolios -->
@@ -86,7 +142,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
     <div class="snap-drawers">
         <div class="snap-drawer snap-drawer-left sidebar-light-clean">        
             <div class="sidebar-header">
-              
+               
             </div>   
             
             <div class="sidebar-logo"></div>
@@ -96,7 +152,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
            <p class="sidebar-divider">Navigation</p>
             <div class="sidebar-menu">
                
-                   <a class="menu-item" href="admin.php">
+                    <a class="menu-item" href="admin.php">
                         <i class="fa fa-home bg-red-dark"></i>
                         <em>Admin Home</em>
                         <strong></strong>
@@ -137,7 +193,11 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
                         <em>Log Out</em>
                         <strong></strong>
                     </a> 
-          
+                                
+              
+                   
+               
+               
             </div>
                                   
            
@@ -164,38 +224,78 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
             
             <div class="sidebar-menu">
                 <div class="has-submenu">
-                   
+                    <a class="menu-item show-submenu" href="#">
+                        <i class="fa fa-refresh bg-red-dark"></i>
+                        <em>Change Colors</em>
+                        <strong>8</strong>
+                    </a> 
                     <div class="submenu change-colors">
-                       
-                       
                         <div>
-                           
+                            <a class="submenu-item submenu-item-active header-light-toggle" href="#">                               <i class="fa fa-angle-right"></i><em>   Header Light    </em><i class="fa fa-circle"></i></a>
+                            <a class="submenu-item header-dark-toggle" href="#">            <i class="fa fa-angle-right"></i><em>   Header Dark     </em><i class="fa fa-circle"></i></a>
+                        </div>  
+                        <div>
+                            <a class="submenu-item submenu-item-active footer-light-toggle" href="#">                               <i class="fa fa-angle-right"></i><em>   Footer Light    </em><i class="fa fa-circle"></i></a>
+                            <a class="submenu-item footer-dark-toggle" href="#">            <i class="fa fa-angle-right"></i><em>   Footer Dark    </em><i class="fa fa-circle"></i></a>
+                        </div>
+                        <div>
+                            <a class="submenu-item sidebars-light-toggle" href="#">                             <i class="fa fa-angle-right"></i><em>   Sidebar Light    </em><i class="fa fa-circle"></i></a>
+                            <a class="submenu-item sidebars-dark-toggle" href="#">                              <i class="fa fa-angle-right"></i><em>   Sidebar Dark    </em><i class="fa fa-circle"></i></a>
+                            <a class="submenu-item-active submenu-item sidebars-light-icon-toggle" href="#">                        <i class="fa fa-angle-right"></i><em>   Sidebar Light Icons    </em><i class="fa fa-circle"></i></a>
+                            <a class="submenu-item sidebars-dark-icon-toggle" href="#">     <i class="fa fa-angle-right"></i><em>   Sidebar Dark Icons    </em><i class="fa fa-circle"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="has-submenu">
-                  
+                    <a class="menu-item show-submenu" href="#">
+                        <i class="fa fa-navicon bg-blue-dark"></i>
+                        <em>Menu Settings</em>
+                        <strong>4</strong>
+                    </a> 
                     <div class="submenu change-colors">
-                                            
                         <div>
-                           
+                            <a class="submenu-item enable-footer-menu" href="#"><i class="fa fa-angle-right"></i><em>   Enable Footer Menu    </em><i class="fa fa-circle"></i></a>
+                            <a class="submenu-item submenu-item-active disable-footer-menu" href="#"><i class="fa fa-angle-right"></i><em>   Disable Footer Menu    </em><i class="fa fa-circle"></i></a>
+                        </div>                        
+                        <div>
+                            <a class="submenu-item enable-header-menu" href="#"><i class="fa fa-angle-right"></i><em>   Enable Header Menu    </em><i class="fa fa-circle"></i></a>
+                            <a class="submenu-item submenu-item-active disable-header-menu" href="#"><i class="fa fa-angle-right"></i><em>   Disable Header Menu    </em><i class="fa fa-circle"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
                         
-           
+            <p class="sidebar-divider">Let's get social</p>
             
-           
+            <div class="sidebar-menu">
+                <a class="menu-item" href="#">
+                    <i class="fa fa-facebook facebook-color"></i>
+                    <em>Facebook</em>
+                </a>                   
+                <a class="menu-item" href="#">
+                    <i class="fa fa-twitter twitter-color"></i>
+                    <em>Twitter</em>
+                </a>                 
+                <a class="menu-item" href="#">
+                    <i class="fa fa-google-plus google-color"></i>
+                    <em>Google Plus</em>
+                </a>                    
+                <a class="menu-item" href="#">
+                    <i class="fa fa-youtube-play youtube-color"></i>
+                    <em>YouTube</em>
+                </a>    
+            </div>
                         
-            <p class="sidebar-divider"></p>
+            <p class="sidebar-divider">Send an email</p>
             
             <div class="container no-bottom">
                 <div class="sidebar-form contact-form no-bottom"> 
                     <em>
-                        
+                        Your message is important to us and we reply to all of them in less than 48 hours.
                     </em>
-                  
+                    <div class="formSuccessMessageWrap" id="formSuccessMessageWrap">
+                        Awesome! We'll get back to you!
+                    </div>
                    
                 </div>
             </div>
@@ -204,7 +304,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
             
           
             
-           
+            <p class="sidebar-footer">Copyright 2015. All rights reserved</p>
         </div>        
         
         <div id="content" class="snap-content">
@@ -212,59 +312,65 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
             
             <div class="content">                
                 <div class="container heading-style-5">
-                    <h4 class="heading-title">Admininstrators</h4>
+                    <h4 class="heading-title">Category Edit</h4>
                     <i class="fa fa-user heading-icon"></i>
                     <div class="line bg-black"></div>
                     <p class="user-list-follow">
-                     <form method="POST" id="addadmin" class="contactform">
-                       Add New Admin: <div class="formFieldWrap">
-                       <div class="pageapp-signup-field">
-                            <i class="fa fa-user"></i>  <input type="text"  onfocus="if (this.value=='UserName') this.value = ''" onblur="if (this.value=='') this.value = 'UserName'" value="UserName" name="username" id="username" class="contactField requiredField requiredusernameField" ></div>
- <div class="pageapp-signup-field">
-                            <input type="text" onfocus="if (this.value=='Password') this.value = ''" onblur="if (this.value=='') this.value = 'Password'" value="Password" name="password" id="password" class="contactField requiredField requiredpasswordField" ></div>
-                              <div class="pageapp-signup-field">
-                          <input type="text" value="First Name" name="firstname" id="firstname" class="contactField requiredField requiredfnameField"  onfocus="if (this.value=='First Name') this.value = ''" onblur="if (this.value=='') this.value = 'First Name'"></div>
-                                  <input type="text" value="Last Name" name="lastname" id="lastname" class="contactField requiredField requiredlastnameField"  onfocus="if (this.value=='Last Name') this.value = ''" onblur="if (this.value=='') this.value = 'Last Name'">
-                                    <div class="pageapp-signup-field">
-                            
-                                    <input type="text" value="Phone" name="phone" id="phone" class="contactField requiredField requiredphoneField"  onfocus="if (this.value=='Phone') this.value = ''" onblur="if (this.value=='') this.value = 'Phone'"></div>
-                                    <input type="text" value="Email" name="email" id="email" class="contactField requiredField requiredEmailField" onfocus="if (this.value=='Email') this.value = ''" onblur="if (this.value=='') this.value = 'Email'" >
+                       
+                   
+                    
+                        <div class="formFieldWrap">
+                           <div class="pageapp-signup-field">
+                           <table width="100%" border="1">
+  <tr>
+    <td>Delete</td>
+    <td>Save</td>
+    <td>Sub Category</td>
+    <td>Main Cagegory</td>
+  </tr>
+    <?php
+						
+   do { 
+$thecatid=$row_Recordset1['cat_id'];
+$thecatname=$row_Recordset1['cat_name'];
+$thecatextra=$row_Recordset1['cat_extra'];
+
+
+?>      <form method="POST" id="editcat" class="contactform">  
+  <tr>
+    <td> <a href="#" onClick="editcat(<?php echo $thecatid; ?>,2)" class="buttonWrap button button-red "> Delete</a> </td>
+    <td> <input type="submit" class="buttonWrap button button-green " id="editcat" value="Save" data-formId="editcat"/>     </td>
+    <td><input type="text" value="<?php echo $row_Recordset1['cat_name']; ?>
+" name="name" id="name" class="contactField requiredField requiredEmailField" ></div>
+ <div class="pageapp-signup-field"></td>
+    <td><input type="text" value="<?php echo $row_Recordset1['cat_extra']; ?>
+" name="extra" id="extra" class="contactField requiredField requiredEmailField" >
+<input type="hidden" value="<?php echo $row_Recordset1['cat_id']; ?>
+" name="cat_id" id="cat_id" ></td>
+  </tr>
+   </form>
+      <?php   } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
+	  
+?>
+</table>
+
+                             
+            
+               
                                    
-                   <input type="hidden" value="<?php echo $today ?>" name="date" id="date" >
-             <input type="hidden" name="clientid" id="clientid" value="<?php echo $row_Recordset11['admin_id']; ?>">
-                                  
-                            <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="addadmin" value="Add Admin" data-formId="addadmin"/>       
                             </div>
-                            </form>
+                         
+                           
+                             
+                            
                     </p>
+                     <div class="decoration"></div>
+                      <a href="admin.php" class="facebook-login facebook-color"><i class="fa fa-backward"></i>Back Home</a>
                 </div> 
                 
                 <div class="decoration"></div>
-               
-
- <?php
-	
-					
-   do { 
-$thefname=$row_Recordset1['Fname'];
-$thelname=$row_Recordset1['Lname'];
-$theemail=$row_Recordset1['email'];
-$thecustid=$row_Recordset1['admin_id'];
-
-?>               
-                <div class="one-third-responsive">
-                    <p class="user-list-follow">
-                        <img src="../images/pictures/1s.jpg" alt="img">
-                        <strong><?php echo $thefname ?> <?php echo $thelname ?><br><em><?php echo $theemail ?></em></strong>
-                        <a href="admin_editprofileadmin.php?ID=<?php echo $thecustid ?>&uemail=<?php echo $theemail ?>" class="follow">Edit Admin</a>
-                    </p>
-                    <div class="decoration"></div>                
-                   
-                  
-                </div>            
- <?php   } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
-	
-?>
+                <div class="decoration"></div> 
+ 
                
                 
                 <div class="decoration"></div>
@@ -272,15 +378,21 @@ $thecustid=$row_Recordset1['admin_id'];
                 <div class="container-fullscreen footer footer-light">
                     <a href="#" class="footer-logo"></a>
                     <p class="half-bottom center-text">
-                       
+                        We aim to simplify your life by creating a 
+                        beautiful and simple product that's feature rich and easy to use!
                     </p>
                     <div class="decoration"></div>
                     <div class="footer-socials">
-                       
+                        <a href="#" class="scale-hover facebook-color"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="scale-hover google-color"><i class="fa fa-google-plus"></i></a>
+                        <a href="#" class="scale-hover twitter-color"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="scale-hover phone-color"><i class="fa fa-phone"></i></a>
+                        <a href="#" class="scale-hover mail-color"><i class="fa fa-envelope-o"></i></a>
+                        <a href="#" class="scale-hover bg-magenta-dark back-to-top"><i class="fa fa-angle-up"></i></a>
                         <div class="clear"></div>
                     </div>
                     <div class="decoration"></div>
-                    <p class="small-text no-bottom center-text">Copyright <?php echo $year ?>. All Rights Reserved</p>
+                    <p class="small-text no-bottom center-text">Copyright 2016. All Rights Reserved</p>
                 </div>
                 <div class="footer-clear disabled"></div>
                 

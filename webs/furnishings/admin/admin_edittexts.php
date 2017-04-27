@@ -1,18 +1,21 @@
 <?php 
 include 'Data/logitin.php'; 
 require_once('Data/furniture.php');
-
-	
-	
 	
 mysql_select_db($database_furniture, $furniture);
-$query_Recordset1 = "SELECT * from `administrators` ";
+$query_Recordset1 = "SELECT * from `text_emails`  ";
 $Recordset1 = mysql_query($query_Recordset1, $furniture) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
-
-
+$gid=$_GET['ID'];
+if($gid!=''){
+mysql_select_db($database_furniture, $furniture);
+$query_Recordset11 = "SELECT * from `text_emails`  where textid=$gid ";
+$Recordset11 = mysql_query($query_Recordset11, $furniture) or die(mysql_error());
+$row_Recordset11 = mysql_fetch_assoc($Recordset11);
+$totalRows_Recordset11 = mysql_num_rows($Recordset11);	
+}
 ?>
 <!DOCTYPE HTML>
 <head>
@@ -96,7 +99,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
            <p class="sidebar-divider">Navigation</p>
             <div class="sidebar-menu">
                
-                   <a class="menu-item" href="admin.php">
+                    <a class="menu-item" href="admin.php">
                         <i class="fa fa-home bg-red-dark"></i>
                         <em>Admin Home</em>
                         <strong></strong>
@@ -129,8 +132,6 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
                         <em>Add Categories </em>
                         <strong></strong>
                     </a>
-                   
-                   
                
                     <a class="menu-item" href="<?php echo $logoutAction ?>">
                         <i class="fa fa-navicon bg-green-dark"></i>
@@ -212,30 +213,45 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
             
             <div class="content">                
                 <div class="container heading-style-5">
-                    <h4 class="heading-title">Admininstrators</h4>
+                    <h4 class="heading-title">Text/Email Verbaige</h4>
                     <i class="fa fa-user heading-icon"></i>
                     <div class="line bg-black"></div>
                     <p class="user-list-follow">
-                     <form method="POST" id="addadmin" class="contactform">
-                       Add New Admin: <div class="formFieldWrap">
+                  <?  if($gid==''){ ?>
+
+                     <form method="POST" id="addtext" class="contactform">
+                       Add New Text/Email Verbaige: <div class="formFieldWrap">
                        <div class="pageapp-signup-field">
-                            <i class="fa fa-user"></i>  <input type="text"  onfocus="if (this.value=='UserName') this.value = ''" onblur="if (this.value=='') this.value = 'UserName'" value="UserName" name="username" id="username" class="contactField requiredField requiredusernameField" ></div>
+                            <i class="fa fa-user"></i>  <input type="text"   onfocus="if (this.value=='Verbaige') this.value = ''" onblur="if (this.value=='') this.value = 'Verbaige'" value="Verbaige" name="verbaige" id="verbaige" class="contactField requiredField requiredusernameField" >
  <div class="pageapp-signup-field">
-                            <input type="text" onfocus="if (this.value=='Password') this.value = ''" onblur="if (this.value=='') this.value = 'Password'" value="Password" name="password" id="password" class="contactField requiredField requiredpasswordField" ></div>
-                              <div class="pageapp-signup-field">
-                          <input type="text" value="First Name" name="firstname" id="firstname" class="contactField requiredField requiredfnameField"  onfocus="if (this.value=='First Name') this.value = ''" onblur="if (this.value=='') this.value = 'First Name'"></div>
-                                  <input type="text" value="Last Name" name="lastname" id="lastname" class="contactField requiredField requiredlastnameField"  onfocus="if (this.value=='Last Name') this.value = ''" onblur="if (this.value=='') this.value = 'Last Name'">
-                                    <div class="pageapp-signup-field">
-                            
-                                    <input type="text" value="Phone" name="phone" id="phone" class="contactField requiredField requiredphoneField"  onfocus="if (this.value=='Phone') this.value = ''" onblur="if (this.value=='') this.value = 'Phone'"></div>
-                                    <input type="text" value="Email" name="email" id="email" class="contactField requiredField requiredEmailField" onfocus="if (this.value=='Email') this.value = ''" onblur="if (this.value=='') this.value = 'Email'" >
-                                   
-                   <input type="hidden" value="<?php echo $today ?>" name="date" id="date" >
-             <input type="hidden" name="clientid" id="clientid" value="<?php echo $row_Recordset11['admin_id']; ?>">
-                                  
-                            <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="addadmin" value="Add Admin" data-formId="addadmin"/>       
+              
+               <select name="types" id="types" class="contactField requiredField requiredEmailField" >
+            <option value="0" class="select-title">Text Message</option>
+               <option value="1">Email</option>
+               </select></div>
+                            <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="addtext" value="Add Text" data-formId="addtext"/>       
                             </div>
                             </form>
+                            <? } else {  ?>
+                             <form method="POST" id="edittext" class="contactform">
+                       Edit Web Verbaige: <div class="formFieldWrap">
+                       <div class="pageapp-signup-field">
+                            <i class="fa fa-user"></i>  <input type="text"    value="<?php echo $row_Recordset11['textinfo']; ?>
+" name="verbaige" id="verbaige" class="contactField requiredField requiredusernameField" ></div>
+ <div class="pageapp-signup-field">
+                <input type="hidden"  value="<?php echo $gid ?>
+" name="ggid" id="ggid" >
+ <select name="type" class="contactField requiredField requiredEmailField" >
+            <option value="<?php echo $row_Recordset11['type']; ?>" class="select-title"><? if($row_Recordset11['type']==0){ ?>Text Message <? } else { ?>Email Message<? } ?></option>
+            <option value="0" class="select-title">Text Message</option>
+               
+                <option value="1">Email</option>
+                
+               </select>
+                            <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="edittext" value="Edit Verbaige" data-formId="edittext"/>       
+                            </div>
+                            </form>
+                            <? } ?>
                     </p>
                 </div> 
                 
@@ -246,17 +262,15 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 	
 					
    do { 
-$thefname=$row_Recordset1['Fname'];
-$thelname=$row_Recordset1['Lname'];
-$theemail=$row_Recordset1['email'];
-$thecustid=$row_Recordset1['admin_id'];
+$thefname=$row_Recordset1['textinfo'];
+$thecustid=$row_Recordset1['textid'];
 
 ?>               
                 <div class="one-third-responsive">
                     <p class="user-list-follow">
                         <img src="../images/pictures/1s.jpg" alt="img">
-                        <strong><?php echo $thefname ?> <?php echo $thelname ?><br><em><?php echo $theemail ?></em></strong>
-                        <a href="admin_editprofileadmin.php?ID=<?php echo $thecustid ?>&uemail=<?php echo $theemail ?>" class="follow">Edit Admin</a>
+                        <strong><?php echo $thefname ?> </em></strong>
+                        <a href="admin_edittexts.php?ID=<?php echo $thecustid ?>" class="follow">Edit Verbaige</a>
                     </p>
                     <div class="decoration"></div>                
                    

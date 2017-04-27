@@ -12,13 +12,13 @@ $totalRows_Recordset11 = mysql_num_rows($Recordset11);
 
 
 mysql_select_db($database_furniture, $furniture);
-$query_Recordset1 = "SELECT cat_id, cat_name, gethasemailalert(cat_id,'$temail') as hasemailalert, getuserid('$temail') as userid from `categories`";
+$query_Recordset1 = "SELECT cat_id, cat_name, gethasemailalert(cat_id,'$temail') as hasemailalert, getuserid('$temail') as userid from `categories` order by cat_name";
 $Recordset1 = mysql_query($query_Recordset1, $furniture) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
 mysql_select_db($database_furniture, $furniture);
-$query_Recordset2 = "SELECT cat_id, cat_name, gethastextalert(cat_id,'$temail') as hastextalert, getuserid('$temail') as userid from `categories`  ";
+$query_Recordset2 = "SELECT cat_id, cat_name, gethastextalert(cat_id,'$temail') as hastextalert, getuserid('$temail') as userid from `categories` order by cat_name ";
 $Recordset2 = mysql_query($query_Recordset2, $furniture) or die(mysql_error());
 $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -59,7 +59,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 <script type="text/javascript" src="../scripts/jquery.js"></script>
 <script type="text/javascript" src="../scripts/jqueryui.js"></script>
 <script type="text/javascript" src="../scripts/framework-plugins.js"></script>
-<script type="text/javascript" src="../scripts/custom.js"></script>
+<script type="text/javascript" src="../scripts/custom1.js"></script>
 
 <script language="javascript">
      var request = false;
@@ -154,9 +154,9 @@ function addalerts(cat,user,alerts){
            <p class="sidebar-divider">Navigation</p>
             <div class="sidebar-menu">
                
-                    <a class="menu-item" href="admin.php">
+                   <a class="menu-item" href="admin.php">
                         <i class="fa fa-home bg-red-dark"></i>
-                        <em>Home</em>
+                        <em>Admin Home</em>
                         <strong></strong>
                     </a> 
                    
@@ -172,6 +172,21 @@ function addalerts(cat,user,alerts){
                         <em>Edit Admins</em>
                         <strong></strong>
                     </a> 
+                    <a class="menu-item" href="admin_edittexts.php">
+                        <i class="fa fa-cog bg-orange-dark"></i>
+                        <em>Add Text/Email</em>
+                        <strong></strong>
+                    </a> 
+                   <a class="menu-item" href="admin_editwebsite.php">
+                        <i class="fa fa-cog bg-orange-dark"></i>
+                        <em>Add Website Data</em>
+                        <strong></strong>
+                    </a>
+                     <a class="menu-item" href="admin_editcats.php">
+                        <i class="fa fa-cog bg-orange-dark"></i>
+                        <em>Add Categories </em>
+                        <strong></strong>
+                    </a>
                    
                    
                
