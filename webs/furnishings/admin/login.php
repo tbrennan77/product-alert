@@ -116,279 +116,64 @@ mysql_select_db($database_furniture, $furniture);
 <link rel="icon" type="../image/png" href="../images/splash/favicon-16x16.png" sizes="16x16">
 <link rel="shortcut icon" href="../images/splash/favicon.ico" type="image/x-icon" /> 
     
-<title>CF ADMINISTRATION</title>
+<title>MyFurnitureWishlist | Admin</title>
 
-<link href="../styles/style.css"           rel="stylesheet" type="text/css">
-<link href="../styles/menus.css"           rel="stylesheet" type="text/css">
-<link href="../styles/framework.css"       rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
 <link href="../styles/font-awesome.css"    rel="stylesheet" type="text/css">
 <link href="../styles/animate.css"         rel="stylesheet" type="text/css">
+<link href="../styles/overrides.css"       rel="stylesheet" type="text/css">
+<link href="../styles/hamburgers.css"      rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="../scripts/jquery.js"></script>
 <script type="text/javascript" src="../scripts/jqueryui.js"></script>
-<script type="text/javascript" src="../scripts/framework-plugins.js"></script>
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="../scripts/stickyfill.js" type="text/javascript"></script>
 <script type="text/javascript" src="../scripts/custom1.js"></script>
 </head>
 
-<body class="dual-sidebar"> 
-    
-<div id="preloader">
-	<div id="status">
-        <div class="preloader-logo"></div>
-        <h3 class="center-text">Welcome</h3>
-        <p class="center-text smaller-text">
-            We're loading the content, give us a second. This won't take long!
-        </p>
-    </div>
-</div>
-    
-<div id="header-fixed" class="header-light">
-    <a class="header-icon-left open-left-sidebar" href="#"><i class="fa fa-navicon"></i></a>
-    <a class="header-icon-two open-header-menu disabled" href="#"><i class="fa fa-angle-down"></i></a>
-    <a class="header-logo" href="#"></a>
-    <a class="header-icon-right open-right-sidebar" href="#"><i class="fa fa-envelope-o"></i></a>
-    
-    <div class="header-menu-overlay"></div>
-    <div class="header-menu header-menu-light">
-     
-    </div> 
-</div> 
-    
-        
-<div id="footer-fixed" class="footer-menu footer-light disabled">
-  
-</div>
-    
-<div class="gallery-fix"></div> <!-- Important for all pages that have galleries or portfolios -->
-            
-<div class="all-elements">
-    <div class="snap-drawers">
-        <div class="snap-drawer snap-drawer-left sidebar-light-clean">        
-            <div class="sidebar-header">
-               
-            </div>   
-            
-            <div class="sidebar-logo"></div>
-            
-            <div class="sidebar-divider no-bottom"></div>
-
-            <p class="sidebar-divider">Navigation</p>
-            <div class="sidebar-menu">
-               
-                    <a class="menu-item" href="index.php">
-                        <i class="fa fa-home bg-red-dark"></i>
-                        <em>Home</em>
-                        <strong></strong>
-                    </a> 
-                   
-                             
-               
-                    <a class="menu-item" href="editprofile.php">
-                        <i class="fa fa-cog bg-orange-dark"></i>
-                        <em>Profile</em>
-                        <strong></strong>
-                    </a> 
-                   
-                   
-               
-                    <a class="menu-item" href="<?php echo $logoutAction ?>">
-                        <i class="fa fa-navicon bg-green-dark"></i>
-                        <em>Log Out</em>
-                        <strong></strong>
-                    </a> 
-                                
-              
-                   
-               
-               
-            </div>
-                                  
-           
-                <a class="menu-item close-sidebar" href="#">
-                    <i class="fa fa-times bg-red-dark"></i>
-                    <em>Close</em>
+<body> 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 text-header text-center">
+            <a class="header-logo" href="#"><img src="http://www.myfurniturewishlist.com/images/my_furniture_wishlist_logo.png" class="img-fluid" /></a>
+            <h1 style="padding-bottom: 15px;">My Furniture Wishlist</h1>
+            <p></p>
+        </div>
+        <div class="col-sm-12 text-center" style="display: none;">
+            <div class="fb-login social-login">
+               <a data-analytics_details="facebook" data-analytics_event="Sign Up" data-analytics_location="sign up page" href="<?php echo $loginURL; ?>">
+                    <div class="ml-icon ml-facebook-login"></div>
                 </a>
             </div>
-            
-            <p class="sidebar-footer">Copyright 2017. All rights reserved</p>
-            
         </div>
-        
-        <!--Right Sidebar -->
-        
-        <!--Right Sidebar -->
-        
-        <div class="snap-drawer snap-drawer-right sidebar-light-clean">
-            <div class="sidebar-header">
-             
-            </div>   
-            
-            <div class="sidebar-logo"></div>
-                        
-            <div class="sidebar-divider no-bottom"></div>
-            
-          
-            
-            <div class="sidebar-menu">
-                <div class="has-submenu">
-                
-                    <div class="submenu change-colors">
-                        <div>
-                          
-                        </div>  
-                        <div>
-                            
-                        </div>
-                        <div>
-                          
-                        </div>
-                    </div>
-                </div>
-                <div class="has-submenu">
-                   
-                       
-                    <div class="submenu change-colors">
-                        <div>
-                         
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        
-            <p class="sidebar-divider"></p>
-            
-            <div class="sidebar-menu">
-              
-            </div>
-                        
-            <p class="sidebar-divider"></p>
-            
-            <div class="container no-bottom">
-                <div class="sidebar-form contact-form no-bottom"> 
-                  
-                    <div class="formSuccessMessageWrap" id="formSuccessMessageWrap">
-                      
-                    </div>
-                  
-                </div>
-            </div>
-            
-            <p class="sidebar-divider">Contact Us</p>
-            
-            <div class="sidebar-menu">
-              
-            </div>
-            
-            <p class="sidebar-footer">Copyright <?php echo $year ?>. All rights reserved</p>
-        </div>        
-        
-        <div id="content" class="snap-content">      
-            <div class="header-clear"></div>
-            <div class="pageapp-login bg-5 cover-screen">    
-                <div class="pageapp-login-content cover-center">
-                  <div class="boxed-layout">
-                        <a class="pageapp-login-logo" href="#"></a>
-                        <form id="loginform" class="form-vertical no-padding no-margin" action="<?php echo $loginFormAction; ?>" name="loginform" method="post">
-                        <div class="pageapp-login-field">
-                            <i class="fa fa-user"></i>
-                            <input type="text" value="UserName" id="username" name="username" onfocus="if (this.value=='UserName') this.value = ''" onblur="if (this.value=='') this.value = 'UserName'">
-                        </div>
-                        <div class="pageapp-login-field">
-                            <i class="fa fa-mobile"></i>
-                            <input type="password" id="password" name="password" value="Password" onfocus="if (this.value=='Password') this.value = ''" onblur="if (this.value=='') this.value = 'Password'">
-                        </div>
-                          <div class="pageapp-login-links">
-                       
-                        <div class="clear"></div>
-                    </div>
-                        <input name="fname" type="hidden" id="fname">
-<input name="lname" type="hidden" id="lname">
-<input name="uid" type="hidden" id="uid">
-<input name="token" type="hidden" id="token">
-<input name="tries" type="hidden" id="tries" value="<?php $attempts ?>">
- <br>
- <a href="#" onClick="javascript: document.loginform.submit();" class="pageapp-signup-button button button-small button-green button-fullscreen">ADMIN LOG IN</a>
- 
-                    </form>
-                       
-                    <div class="decoration"></div>
-                   
-                                       
-                    </div>
-                </div>
-                <div class="overlay bg-black"></div>
-               
-            </div>   
-            
-        </div>
-    </div>  
-    <a href="#" class="back-to-top-badge"><i class="fa fa-caret-up"></i>Back to top</a>
-</div>
-    
-    
-<!--Fly up share box and notifications go here -->
-<!--These are the only features that should be placed outside the all-elements class-->
-    
-<div class="share-bottom">
-    <h3>Share Page</h3>
-    <div class="share-socials-bottom">
-        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.themeforest.net/">
-            <i class="fa fa-facebook facebook-color"></i>
-            Facebook
-        </a>
-        <a href="https://twitter.com/home?status=Check%20out%20ThemeForest%20http://www.themeforest.net">
-            <i class="fa fa-twitter twitter-color"></i>
-            Twitter
-        </a>
-        <a href="https://plus.google.com/share?url=http://www.themeforest.net">
-            <i class="fa fa-google-plus google-color"></i>
-            Google
-        </a>
+        <div class="col-sm-12">
+          <form id="loginform" class="form-vertical no-padding no-margin" action="<?php echo $loginFormAction; ?>" name="loginform" method="post">
 
-        <a href="https://pinterest.com/pin/create/button/?url=http://www.themeforest.net/&media=https://0.s3.envato.com/files/63790821/profile-image.jpg&description=Themes%20and%20Templates">
-            <i class="fa fa-pinterest-p pinterest-color"></i>
-            Pinterest
-        </a>
-        <a href="sms:">
-            <i class="fa fa-comment-o sms-color"></i>
-            Text
-        </a>
-        <a href="mailto:?&subject=Check this page out!&body=http://www.themeforest.net">
-            <i class="fa fa-envelope-o mail-color"></i>
-            Email
-        </a>
-        <div class="clear"></div>
+                            
+                            <div class="form-group">
+                                <input class="form-control" id="username" name="username" type="text" placeholder="Username" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" id="password" name="password" value="Password" placeholder="Password" />
+                            </div>
+
+                        <input name="fname" type="hidden" id="fname">
+                        <input name="lname" type="hidden" id="lname">
+                        <input name="uid" type="hidden" id="uid">
+                        <input name="token" type="hidden" id="token">
+                        <input name="tries" type="hidden" id="tries" value="<?php $attempts ?>">
+                         <br>
+                         <a href="#" onClick="javascript: document.loginform.submit();" class="pageapp-signup-button button button-small button-green button-fullscreen">ADMIN LOG IN</a>
+
+                        <input class="btn-block btn-main btn" type="submit" value=" Admin Log In">
+
+                    </form>
+        </div>
     </div>
-    <a href="#" class="close-share-bottom">Close</a>
 </div>
-    
-<div class="top-notification-1 top-notification bg-blue-dark">
-    <h4>Did you know?</h4>
-    <p>
-        Easy way to make sure your messages get read!
-    </p>
-    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
-</div>
-<div class="bottom-notification-1 bottom-notification bg-green-dark">
-    <h4>Did you know?</h4>
-    <p>
-        Easy way to make sure your messages get read!
-    </p>
-    <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
-</div> 
-<div class="bottom-notification-2 bottom-notification bg-orange-dark timeout-notification">
-    <h4>Timeout: 5 Seconds</h4>
-    <p>
-        I'll go away on my own after a few seconds!
-    </p>
-</div>
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification">
-    <h4>Timeout: 5 Seconds</h4>
-    <p>
-        I'll go away on my own after a few seconds!
-    </p>
-</div>
-    
+
 </body>
 
 

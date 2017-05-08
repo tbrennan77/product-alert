@@ -57,7 +57,7 @@ if(!$fbUser){
         $output = '<h3 style="color:red">Some problem occurred, please try again.</h3>';
     }
 
-    // echo $output;
+    echo $output;
 }
 
 // *** Validate request to login to this site.

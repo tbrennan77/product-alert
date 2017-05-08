@@ -11,11 +11,16 @@ require_once 'User.php';
 // they will be valid users
 
 if(!$fbUser){
+
+  // This creates the Facebook link that we will insert for allowing users to login with Facebook
 	$fbUser = NULL;
 	$loginURL = $facebook->getLoginUrl(array('redirect_uri'=>$redirectURL,'scope'=>$fbPermissions));
 	$output = '<a href="'.$loginURL.'"><img src="images/fblogin-btn.png"></a>'; 	
+
 } else {
-    //Get user profile data from facebook
+
+    // This user is already validated with Facebook
+    // Get user profile data from facebook
     $fbUserProfile = $facebook->api('/me?fields=id,first_name,last_name,email,link,gender,locale,picture');
 
     //Initialize User class
@@ -35,7 +40,7 @@ if(!$fbUser){
     );
     $userData = $user->checkUser($fbUserData);
     
-    // print_r($userData);
+    print_r($userData);
 
     //Put user data into session
     $_SESSION['userData'] = $userData;
@@ -57,9 +62,19 @@ if(!$fbUser){
     }
 }
 
+// $theuser is a variable set in logitin.php and is the Session email variable
+$loggedin = false;
+
+if($theuser) {
+  $loggedin = true;
+}
+
+
 mysqli_select_db($furniture, $database_furniture);
 
 $query_Recordset1 = "SELECT cat_id, cat_name, gethasemailalert(cat_id,'$theuser') as hasemailalert, getuserid('$theuser') as userid from `categories` order by cat_name";
+
+echo "<br />".$query_Recordset1;
 
 $Recordset1 = mysqli_query($furniture, $query_Recordset1) or die(mysql_error());
 $row_Recordset1       = $Recordset1->fetch_assoc();
@@ -68,6 +83,8 @@ $totalRows_Recordset1 = $Recordset1->num_rows;
 mysqli_select_db($furniture, $database_furniture);
 
 $query_Recordset2 = "SELECT cat_id, cat_name, cat_extra, gethastextalert(cat_id,'$theuser') as hastextalert, getuserid('$theuser') as userid from `categories`  order by cat_extra DESC, cat_name ASC";
+
+echo "<br />".$query_Recordset2;
 
 $Recordset2 = mysqli_query($furniture, $query_Recordset2) or die(mysql_error());
 $row_Recordset2 	  = $Recordset2->fetch_assoc();
@@ -112,6 +129,7 @@ $totalRows_Recordset2 = $Recordset2->num_rows;
 <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script type="text/javascript" src="scripts/custom.js"></script>
+<script src="scripts/stickyfill.js" type="text/javascript"></script>
 
  <script language="javascript">
      var request = false;
@@ -176,7 +194,86 @@ $(document).ready(function(){
 	   	$("#email-alerts").removeClass( "tab-active" );
 	    $("#text-alerts").addClass( "tab-active" );
 	});
+
+  var $btns = $('.btn-select').click(function() {
+    if (this.id == 'all') {
+      $('#parent > div').fadeIn(450);
+    } else {
+      var $el = $('.' + this.id).fadeIn(450);
+      $('#parent > div').not($el).hide();
+    }
+    $btns.removeClass('active');
+    $(this).addClass('active');
+  })
+
+
+  var stickyNavTop = $('.filter').offset().top;
+   
+  var stickyNav = function(){
+  var scrollTop = $(window).scrollTop();
+        
+  if (scrollTop > stickyNavTop) { 
+      $('.filter').addClass('sticky');
+  } else {
+      $('.filter').removeClass('sticky'); 
+  }
+  };
+   
+  stickyNav();
+   
+  $(window).scroll(function() {
+    stickyNav();
+  });
+
 });
+
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          document.getElementById("tothetop").style.display = "block";
+      } else {
+          document.getElementById("tothetop").style.display = "none";
+      }
+  }
+
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+      document.body.scrollTop = 0; // For Chrome, Safari and Opera 
+      document.documentElement.scrollTop = 0; // For IE and Firefox
+  }
+
+
+$("#registerform").submit(function(event){
+    // cancels the form submission
+    event.preventDefault();
+    submitForm();
+});
+
+function submitForm(){
+    // Initiate Variables With Form Content
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var phone = $("#phone").val();
+    var carrier = $("#phone_carrier").val();
+    var password = $("#password").val();
+ 
+    $.ajax({
+        type: "POST",
+        url: "php/form-process.php",
+        data: "name=" + name + "&email=" + email + "&phone=" + phone + "&phone_carrier=" + phone_carrier + "&password=" + password + "&type=3",
+        success : function(text){
+            if (text == "success"){
+                formSuccess();
+            }
+        }
+    });
+}
+function formSuccess(){
+    $( "#msgSubmit" ).removeClass( "hidden" );
+}
+
 </script>
 
 
@@ -194,10 +291,21 @@ $(document).ready(function(){
             <p>
             Click on the product categories below that interest you to receive alerts for your wishlist. As items are received, you will immediately get a one time notification for each item category that you have selected below. You'll be the first to know! If you want to stop alerts simply come back here and unselect the categories you are done with.
             </p>
+            <?php if($loggedin) { ?>
+            <p style="color: #000;">You are logged in as <?php echo $theuser; ?>. <a class="" href="logout.php?doLogout=true" style="color: #e10e5d;">Logout</a>.</p>
+            <?php } else { ?>
+            <p style="color: #000;">Once you are done selecting, scroll down to <a class="" href="#profile" style="color: #e10e5d;">create a profile</a>.</p>
+            <?php } ?>
+        </div>
+        <div class="col-sm-12 text-center filter" id="filter">
+            <button class="active btn-select" id="all">Show All</button>
+            <button class="btn-select" id="popular">Popular</button>
+            <button class="btn-select" id="styles">Styles</button>
+            <button class="btn-select" id="more">More</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12" id="parent">
                     <?php
                         $count = 0;
                         do { 
@@ -218,7 +326,7 @@ $(document).ready(function(){
                             if($thecatnames!="") {
 
                             ?>
-                            <div class="checkbox-list">
+                            <div class="checkbox-list <?php echo $thecatstyle; ?>">
                                 <input id="toggle<?php echo $count; ?>" type="checkbox" onClick="addalerts(<?php echo $thecatids ?>,<?php echo $thecustids ?>,2)" <?php if($showalerts) echo "checked"; ?>>
                                 <label for="toggle<?php echo $count; ?>"><?php echo $thecatnames ?></label>
                             </div>
@@ -234,10 +342,90 @@ $(document).ready(function(){
         </div>
     </div>
     <div class="row">
+        <?php if($loggedin) { ?>
         <div class="col-sm-12 text-center" style="margin: 50px 0;">
-            <p><a class="header-icon-right" href="logout.php">Logout</a></p>
+            <p><a class="btn-block btn-main btn" href="logout.php?doLogout=true">Logout</a></p>
+        </div>
+        <?php } else { ?>
+        <a name="profile"></a>
+        <div class="row pt-4 mt-4">
+            <div class="col-sm-12 pt-4 mt-4 text-header text-center">
+                <h1 style="padding-bottom: 15px;">Get notified when what you want arrives!</h1>
+                <p>Create a Profile</p>
+            </div>
+            <div class="col-sm-12 text-center">
+                <p>
+                  Enter your name, cell number and select your carrier (email is optional). We'll notify you right away when items in your collections come in. 
+                </p>
+            </div>
+        </div>
+        <form role="form" id="registerform" name="registerform">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <input type="text" name="name" id="name" class="form-control requiredField requiredEmailField" placeholder="Your Name Please">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <input type="text" name="phone" id="phone" class="form-control requiredField requiredEmailField" placeholder="Enter Your Cell Number as (555) 333-7890" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group" style="margin-bottom: 0px;">
+                    <select name="phone_carrier" class="form-control requiredField requiredEmailField" id="phone_carrier">
+                        <option value="0">Select Carrier</option>
+                        <option value="@mms.att.net" class="select-title">ATT</option>
+                        <option value="@vtext.com">Verizon</option>
+                        <option value="@pm.sprint.com">Sprint</option>
+                        <option value="@myboostmobile.com">Boost</option>
+                        <option value="@sms.mycricket.com">Cricket</option>
+                        <option value="@vmobl.com">Virgin Mobile</option>
+                        <option value="@txt.att.net">ATT</option>
+                        <option value="@tmomail.net">T Mobile</option>
+                        <option value="@message.alltel.com">AllTel</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                        <span class="small">(may not work with all phone carriers)</span>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group" style="margin-bottom: 0px;">
+                        <input type="text" name="email" id="email" class="form-control" placeholder="Email Address (optional)">
+                </div>  
+                <div class="text-center">
+                        <span class="small">We do not share, post or sell your information <img draggable="false" class="emoji" alt="🙂" src="https://s.w.org/images/core/emoji/2.2.1/svg/1f642.svg"></span>
+                </div>
+            </div>
+            <div class="col-sm-12 hidden-xs-up">
+                <div class="form-group">
+                    <input type="password" value="Password" name="password" id="password" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-12">
+            <p></p>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <input class="btn-block btn-main btn" type="submit" value="Register">
+                </div>
+                 Or, <a href="login.php">back to login</a>.
+
+                <input type="hidden" value="<?php echo $today ?>" name="date" id="date" >
+                <input type="hidden" name="MM_insert" value="form2" id="MM_insert">
+            </div>
+        </div>
+        </form>
+        <?php } ?>
+        <div class="col-sm-12">
+          <button onclick="topFunction()" id="tothetop" title="Go to top">Top</button>
         </div>
     </div>
+</div>
+
+<div class="container">
+
 </div>
 
 

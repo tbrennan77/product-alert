@@ -61,8 +61,7 @@ echo("Request type:".$requesttype);
 	 	 
  $thefname =  $_REQUEST['fname'];
  $thelname =  $_REQUEST['lname'];
- $theemail =  $_REQUEST['email'];
- $thephone=$_REQUEST['phone'];
+
  $theaddress=$_REQUEST['address'];
  $thecity=$_REQUEST['city'];
  $thestate=$_REQUEST['state'];
@@ -70,198 +69,50 @@ echo("Request type:".$requesttype);
  $thecomments=htmlspecialchars($_REQUEST['comments']);
  $thesession=$_REQUEST['sessionid'];
 
-// insert customer information
- mysql_select_db($database_mini, $mini);
-$insertSQL = "insert into customers (fname, lname, email, bill_address, bill_city, bill_state, phone,ship_address, ship_city, ship_state,ship_zip, bill_zip, sessionid ) values ('$thefname', '$thelname','$theemail','$theaddress','$thecity','$thestate','$thephone','$theaddress','$thestate','$thecity','$thezip','$thezip', '$thesession')";
-$Result1 = mysql_query($insertSQL, $mini) or die(mysql_error());  
-
-// get the customerid
- mysql_select_db($database_mini, $mini);
-/*$customerid = "Call updatecustomer ('$thesession')";
-$query_customerid = "select customerid from customers where sessionid='$thesession'";
-$customerid = mysql_query($query_customerid, $mini) or die(mysql_error());  
-$row_customerid = mysql_fetch_assoc($customerid);
-$thecustid=$rows_customerid['customerid']; 
-
-mysql_select_db($database_mini, $mini);
-$query_customerid1 = "update oders set cust_id=$thecustid where sessionid='$thesession'";
-$Result2 = mysql_query($query_customerid1, $mini) or die(mysql_error());  */
-
-mysql_select_db($database_mini, $mini);
-$query_showtotal = sprintf("select customerid from customers where sessionid='$thesession'");
-$showtotal = mysql_query($query_showtotal, $mini) or die(mysql_error());
-$row_showtotal= mysql_fetch_assoc($showtotal);
-$custeromid=$row_showtotal['customerid'];
-
-mysql_select_db($database_mini, $mini);
-$query_showtotal1 = sprintf("update oders set cust_id=$custeromid where sessionid='$thesession'");
-$showtotal1 = mysql_query($query_showtotal1, $mini) or die(mysql_error());
-$row_showtotal1= mysql_fetch_assoc($showtotal1);
-
-
-// email the invoice
-mysql_select_db($database_mini, $mini);
-$query_showrows2 = "SELECT oders.prodid, oders.oderid, oders.cardslit, oders.minilock, oders.makelock, products.prod_shipping, oders.qty, oders.price, products.prod_name, products.prod_desc, oders.order_date, oders.shipping, oders.cust_id, customers.fname, customers.lname, customers.bill_address, customers.bill_state, customers.bill_zip, customers.bill_city, customers.phone, customers.email FROM oders inner join products on oders.prodid=products.productid inner join customers on customers.customerid=oders.cust_id where oders.sessionid='$thesession'";
-$showrows2 = mysql_query($query_showrows2, $mini) or die(mysql_error());
-$row_showrows2 = mysql_fetch_assoc($showrows2);
-
-
-
-         $tprice= $row_showrows2['price'];
-		 $tqty= $row_showrows2['qty'];
-		 $tcardslip=$row_showrows2['cardslit'];
-		 $tminilock=$row_showrows2['minilock'];
-		 $tmakelock=$row_showrows2['makelock'];
-		 $tshipping=$row_showrows2['prod_shipping'];
-		 $tprice1=$tprice*$tqty;
-		 $tprice2=$tcardslip+$tmakelock+$tminilock;
-		 $tprice4=$tqty*$tprice2;
-		 $tprice3=$tshipping*$tqty;
-		 $finalprice=$tprice1+$tprice4+$tprice3;
-		 
-		 $fname=$row_showrows2['fname'];
-$lname=$row_showrows2['lname'];
-$address=$row_showrows2['bill_address'];
-$city=$row_showrows2['bill_city'];
-$state=$row_showrows2['bill_state'];
-$zip=$row_showrows2['bill_zip'];
-$emails=$row_showrows2['email'];       
-$userphone=$row_showrows2['phone'];
-$orderid = $row_showrows2['oderid'];
-
-   // send the email       
-  $HTML         = "<head>
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />
-<title>Country Barn Babe</title>
-<style type=\"text/css\">
-<!--
-.style1 {
-	font-size: 18px;
-	font-weight: bold;
-}
-.style6 {font-family: \"Times New Roman\", Times, serif}
-.style7 {
-	color: #FFFFFF;
-	font-weight: bold;
-}
--->
-</style>
-</head>
-
-<body>
-<table width=\"579\" height=\"394\" border=\"0\" align=\"center\">
-  <tr>
-    <td><div align=\"center\">Thank you for your order! Please allow 3 weeks for your order to ship. As soon as your order is shipped, we will email you tracking info! Feel free to email us at info@countrybarnbabe.com if you have any questions or if you need an order sooner. </div></td>
-  </tr>
-  <tr>
-    <td height=\"49\"><div align=\"center\" class=\"style1\">Country Barn Babe Invoice #".$orderid."</div></td>
-  </tr>
-  <tr>
-    <td bgcolor=\"#000000\"><span class=\"style7\">Billing Info</span> </td>
-  </tr>
-  <tr>
-    <td height=\"100\" valign=\"top\"><table width=\"572\" border=\"0\">
-
-      <tr>
-        <td width=\"114\">Name:</td>
-        <td width=\"448\">".$fname." ".$lname."</td>
-      </tr>
-      <tr>
-        <td>Address:</td>
-        <td>".$address."</td>
-      </tr>
-      <tr>
-        <td>City, State Zip:</td>
-        <td>".$city.", ".$state." ".$zip."</td>
-      </tr>
-      <tr>
-        <td>Email:</td>
-        <td>".$emails."</td>
-      </tr>
-	   <tr>
-        <td>Phone:</td>
-        <td>".$userphone."</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td bgcolor=\"#000000\"><span class=\"style7\">Shipping Info</span></td>
-  </tr>
-  <tr>
-    <td><table width=\"572\" border=\"0\">
-      <tr>
-        <td width=\"114\">Ship to Name:</td>
-        <td width=\"448\">".$fname."</td>
-      </tr>
-      <tr>
-        <td>Address:</td>
-        <td>".$address."</td>
-      </tr>
-      <tr>
-        <td>City,State Zip:</td>
-        <td>".$city.", ".$state." ".$zip."</td>
-      </tr>
-
-    </table></td>
-  </tr>
-  <tr>
-    <td bgcolor=\"#000000\"><span class=\"style7\">Order Info</span></td>
-  </tr>
-  <tr>
-    <td><table width=\"570\" border=\"0\">
-      <tr>
-        <td width=\"118\" bgcolor=\"#EBEBEB\"><div align=\"center\"><strong> </strong></div></td>
-        <td width=\"277\" bgcolor=\"#EBEBEB\"><div align=\"center\"><strong>Item Description </strong></div></td>
-        <td width=\"75\" bgcolor=\"#EBEBEB\"><div align=\"center\"><strong>$ Qty </strong></div></td>
-        <td width=\"82\" bgcolor=\"#EBEBEB\"><div align=\"center\"><strong>$ Price</strong></div></td>
-      </tr>
-	   
-     
-	  ";
-	  $z=0;
-	   do { 
-	   $z++; 
-	   $HTML .="
-      <tr>
-        <td><div align=\"center\">".$z."</div></td>
-        <td><div align=\"center\">".$row_showrows2['prod_name']."</div></td>
-         <td><div align=\"center\">".$row_showrows2['qty']."</div></td>
-       <td><div align=\"center\">".$row_showrows2['price']."</div></td>
-        </div></td>
-		 ";
-		
-		 } while ($row_showrows2 = mysql_fetch_assoc($showrows2));
-		 
-		  
-		 $HTLM .="
-		
-        <td><div align=\"center\">
-          <div align=\"center\"></div>
-        </div></td>
-		
-      </tr>
-	  <tr>
-	 <td><div align=\"center\">Total Price: </div></td>
-        <td><div align=\"center\">".$tprice ."</div></td>
-         <td><div align=\"center\"></div></td>
-       <td><div align=\"center\"></div></td>
-        </div></td>
-	  </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><div align=\"center\">
-      <p><strong>Thank you For your Business! </strong></p>
+ // start the insert 
+ $theemail=$_REQUEST['email'];
+ $thephone=$_REQUEST['phone'];
+ $pphone=preg_replace("/[^0-9]/", "", $_REQUEST['phone']);
       
-      </div></td>
-  </tr>
-</table>
-</body>
-</html>
-"; 
-$from         = "orders@countrybarnbabe.com";
-$to           = "nmiller2288@yahoo.com, bryan@hinklemarine.com";
-$subject     = "Your Order from Country Barn Babe";
+ mysqli_select_db($furniture, $database_furniture);
+
+ $query_Recordset1 = "select IFNULL(clientid,0) as clientid from `clients` where username='$theemail' ";
+
+ $Recordset1 = mysqli_query($furniture, $query_Recordset1) or die(mysql_error());
+
+ $row_Recordset1       = $Recordset1->fetch_assoc();
+ $totalRows_Recordset1 = $Recordset1->num_rows;
+        
+ $theclientid=$row_Recordset1['clientid'];
+
+if($totalRows_Recordset1<=0) { 
+  $insertSQL = sprintf("INSERT INTO clients (username,password,fname, lname, email, phone, modified, created, phone_carrier) VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s)",
+      GetSQLValueString($_POST['email'], "text"),
+      GetSQLValueString($pphone, "text"), //$_POST['password']
+      GetSQLValueString("", "text"),
+      GetSQLValueString("", "text"),
+                         GetSQLValueString($_POST['email'], "text"),
+                         GetSQLValueString($pphone, "text"),
+                                   GetSQLValueString(date("Y-m-d H:i:s"), "date"),
+                         GetSQLValueString(date("Y-m-d H:i:s"), "date"),
+                         GetSQLValueString($_POST['phone_carrier'], "text"));
+              mysqli_select_db($furniture, $database_furniture);
+
+              $Result1 = mysqli_query($furniture, $insertSQL) or die(mysql_error());
+              
+              $insertGoTo ="login.php";
+
+              header(sprintf("Location: %s", $insertGoTo));
+         } else {
+           $errormsg="That email address is already in use. Please try again or <a href='/login.php'>click here to login</a>.";
+         }
+    }
+
+sendHTMLemail($HTML,$from,$to,$subject);
+
+// end send email		  
+}
+
 
 function sendHTMLemail($HTML,$from,$to,$subject)
 {
@@ -305,11 +156,4 @@ function sendHTMLemail($HTML,$from,$to,$subject)
     mail($to,$subject,"",$headers);
     
 }
-sendHTMLemail($HTML,$from,$to,$subject);
-
-// end send email		  
-
-
-
-  }
 ?>

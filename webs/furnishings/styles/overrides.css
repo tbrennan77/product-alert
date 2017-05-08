@@ -192,6 +192,28 @@ input[type="button"].btn-block {
     border-radius: 3px !important;
 }
 
+.btn-select {
+    border-radius: 3px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    min-width: 9rem;
+    border: solid 2px;
+    text-transform: uppercase;
+    color: #019a91;
+    border-color: #019a91;
+    background-color: white;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+.btn-select:active, 
+.btn-select.active {
+    color: #fff;
+    border-color: #fff;
+    background-color: #019a91;
+    border-radius: 3px !important;
+}
 #loginform .btn-main,
 #registerform .btn-main {
     background-color: #019a91;
@@ -595,23 +617,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-@media (min-width: 300px) {
-    .one-half-responsive {
-        width: 90%;
-    }
-}
-
-@media (min-width: 992px) {
-    .btn-main:hover,
-    #home-page #cms-tile-3 .link-text:hover {
-        color: white;
-        background-color: #e10e5d;
-        border-color: #e10e5d
-    }
-    .one-half-responsive {
-        width: 60%;
-    }
-}
 
 .pageapp-login-content {
     width: 100%;
@@ -811,33 +816,6 @@ body #page-container .et_pb_button_0 {
     width: 15px;
 }
 
-@media only screen and ( max-width: 980px) {
-    body #page-container .et_pb_button_2,
-    body #page-container .et_pb_button_2:after {}
-    body #page-container .et_pb_button_1,
-    body #page-container .et_pb_button_1:after {}
-    body #page-container .et_pb_button_0,
-    body #page-container .et_pb_button_0:after {}
-}
-
-@media only screen and ( max-width: 767px) {
-    .et_pb_text_1 {
-        font-size: 30px;
-    }
-    body #page-container .et_pb_button_2,
-    body #page-container .et_pb_button_2:after {}
-    body #page-container .et_pb_button_1,
-    body #page-container .et_pb_button_1:after {}
-    body #page-container .et_pb_button_0,
-    body #page-container .et_pb_button_0:after {}
-    .text-header {
-        font-size: 30px;
-    }
-}
-        
-
-
-
 .checkbox-list input {
   position: absolute;
   left: -9999px;
@@ -937,3 +915,94 @@ height: 50px !important;
 #input_1_4 {
 margin-top: 0px !important;
 }
+
+
+
+#tothetop {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: rgba(243, 101, 35, .7); /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-weight: 700;   
+}
+
+#tothetop:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+}
+
+.filter {
+    background-color: #fff;
+}
+.sticky {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  border-top: 0;
+}
+
+
+@media (min-width: 300px) {
+    .one-half-responsive {
+        width: 90%;
+    }
+    .btn-select {
+        font-size: 13px;
+        padding-left: .25rem;
+        padding-right: .25rem;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .btn-main:hover,
+    #home-page #cms-tile-3 .link-text:hover {
+        color: white;
+        background-color: #e10e5d;
+        border-color: #e10e5d
+    }
+    .one-half-responsive {
+        width: 60%;
+    }
+    .btn-select {
+        font-size: 18px;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-top: 0.65rem;
+        padding-bottom: 0.65rem;
+    }
+}
+@media only screen and ( max-width: 980px) {
+    body #page-container .et_pb_button_2,
+    body #page-container .et_pb_button_2:after {}
+    body #page-container .et_pb_button_1,
+    body #page-container .et_pb_button_1:after {}
+    body #page-container .et_pb_button_0,
+    body #page-container .et_pb_button_0:after {}
+}
+
+@media only screen and ( max-width: 767px) {
+    .et_pb_text_1 {
+        font-size: 30px;
+    }
+    body #page-container .et_pb_button_2,
+    body #page-container .et_pb_button_2:after {}
+    body #page-container .et_pb_button_1,
+    body #page-container .et_pb_button_1:after {}
+    body #page-container .et_pb_button_0,
+    body #page-container .et_pb_button_0:after {}
+    .text-header {
+        font-size: 30px;
+    }
+}
+      

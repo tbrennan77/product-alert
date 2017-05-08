@@ -5,21 +5,27 @@
  $theyear  = date("Y"); 
  $theday   = date("d");
  
+
 // start the session if it's not already
 if (!isset($_SESSION)) {
   session_start();
 }
 
+
 // create a logout link for future use
 $logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
+
 
 // check the query string and append it to our logoutaction link
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
 
+
 // save the current user email address before logging out
-$theuser=$_SESSION['MM_Username'];
+$theuser   = $_SESSION['MM_Username'];
+$theuserid = $_SESSION['MM_UserID'];
+
 
 // if this is a user logout then do the following
 if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
@@ -30,6 +36,7 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
   $_SESSION['PrevUrl'] = NULL;
   $_SESSION['MM_Email']=NULL;
 
+  // Unset the session vars
   unset($_SESSION['MM_Username']);
   unset($_SESSION['MM_UserGroup']);
   unset($_SESSION['PrevUrl']);
@@ -46,8 +53,8 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
 
   // redirect to the login page
   if ($logoutGoTo) {
-    header("Location: $logoutGoTo");
-    exit;
+    //header("Location: $logoutGoTo");
+    //exit;
   }
 
 } else {
@@ -89,21 +96,26 @@ function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) {
 
   // When a visitor has logged into this site, the Session variable MM_Username set equal to their username. 
   // Therefore, we know that a user is NOT logged in if that Session variable is blank. 
+
   if (!empty($UserName)) { 
     // Besides being logged in, you may restrict access to only certain users based on an ID established when they login. 
     // Parse the strings into arrays. 
     $arrUsers = Explode(",", $strUsers); 
     $arrGroups = Explode(",", $strGroups); 
+
     if (in_array($UserName, $arrUsers)) { 
       $isValid = true; 
     } 
+
     // Or, you may restrict access to only certain users based on their username. 
     if (in_array($UserGroup, $arrGroups)) { 
       $isValid = true; 
     } 
+
     if (($strUsers == "") && true) { 
       $isValid = true; 
     } 
+    
   } 
   return $isValid; 
 }
